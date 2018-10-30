@@ -56,13 +56,13 @@
             </Viewbox>
         </Button>
         <Button
-            x:Name="Minimize"
+            x:Name="MinimizeWindow"
                 Grid.Row="0"
                 HorizontalAlignment="Right"
                 Margin="0 0 44 0"
                 Padding="0"
                 Style="{DynamicResource MaterialDesignToolButton}"
-                Click="Exit_Click">
+                Click="MinimizeWindow_Click">
             <Viewbox Width="24" Height="24">
                 <Canvas Width="24" Height="24">
                     <Path Data="M20,14H4V10H20"
