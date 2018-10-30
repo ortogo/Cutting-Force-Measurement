@@ -132,9 +132,8 @@
             </Viewbox>
             <ComboBox
                 x:Name="ComPort"
-                Grid.Row="1"
                 Style="{StaticResource MaterialDesignComboBox}"
-                Height="32" Width="124"
+                Height="32" Width="128"
                 FontSize="16"
                 materialDesign:HintAssist.Hint="COM Port"
                 ToolTip="Выберите COM к которому подключен прибор"
@@ -143,6 +142,19 @@
                 <ComboBoxItem>COM7 Arduino UNO</ComboBoxItem>
                 <ComboBoxItem>COM8 Unknown</ComboBoxItem>
             </ComboBox>
+            <TextBlock
+                FontSize="16"
+                Foreground="Black"
+                VerticalAlignment="Center"
+                Margin="20 0 0 0"
+                >
+                Демо режим
+            </TextBlock>
+            <ToggleButton
+                x:Name="DemoMode"
+                Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                Margin="10 0 0 0"
+                IsChecked="True" />
         </StackPanel>
         
     </Grid>
