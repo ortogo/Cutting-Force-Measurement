@@ -13,12 +13,15 @@
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}" AllowsTransparency="True" WindowStyle="None" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png"
+     FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png" AllowsTransparency="True" WindowStyle="None"
         >
     <Grid MinWidth="790" MinHeight="480">
-        <Grid Height="32"
+        <Grid x:Name="NavigationBar"
+            Height="32"
               Background="{DynamicResource PrimaryHueMidBrush}"
-              VerticalAlignment="Top" >
+              VerticalAlignment="Top"
+              MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
+              >
             <Button 
                 x:Name="Exit"
                 HorizontalAlignment="Left"

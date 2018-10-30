@@ -30,5 +30,10 @@ namespace CuttingForceMeasurement
             // TODO: Add exit dialog
             Close();
         }
+
+        private void NavigationBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            this.DragMove();
+        }
     }
 }
