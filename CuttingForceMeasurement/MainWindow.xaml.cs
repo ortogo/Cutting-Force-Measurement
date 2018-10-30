@@ -24,5 +24,11 @@ namespace CuttingForceMeasurement
         {
             InitializeComponent();
         }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            // TODO: Add exit dialog
+            Close();
+        }
     }
 }
