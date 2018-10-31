@@ -16,7 +16,7 @@
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png" AllowsTransparency="True" WindowStyle="None"
+     FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -48,13 +48,10 @@
                 Margin="0 0 78 0"
                 Padding="0"
                 Style="{DynamicResource MaterialDesignToolButton}">
-            <Viewbox Width="24" Height="24">
-                <Canvas Width="24" Height="24">
-                    <Path Data="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.21,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.21,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.67 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z"
-                          Fill="{DynamicResource MaterialDesignPaper}"
-                          />
-                </Canvas>
-            </Viewbox>
+            <materialDesign:PackIcon
+                Width="24" Height="24"
+                Kind="Settings"
+                Foreground="{DynamicResource MaterialDesignPaper}"/>
         </Button>
         <Button
             x:Name="MinimizeWindow"
@@ -64,12 +61,10 @@
                 Padding="0"
                 Style="{DynamicResource MaterialDesignToolButton}"
                 Click="MinimizeWindow_Click">
-            <Viewbox Width="24" Height="24">
-                <Canvas Width="24" Height="24">
-                    <Path Data="M20,14H4V10H20"
-                          Fill="{DynamicResource MaterialDesignPaper}" />
-                </Canvas>
-            </Viewbox>
+            <materialDesign:PackIcon
+                Width="24" Height="24"
+                Kind="WindowMinimize"
+                Foreground="{DynamicResource MaterialDesignPaper}"/>
         </Button>
         <Button
                 x:Name="Exit"
@@ -79,25 +74,22 @@
                 Padding="0"
                 Style="{DynamicResource MaterialDesignToolButton}"
                 Click="Exit_Click">
-            <Viewbox Width="24" Height="24">
-                <Canvas Width="24" Height="24">
-                    <Path Data="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z"
-                              Fill="{DynamicResource MaterialDesignPaper}" />
-                </Canvas>
-            </Viewbox>
+            <materialDesign:PackIcon
+                Width="24" Height="24"
+                Kind="Close"
+                Foreground="{DynamicResource MaterialDesignPaper}"/>
         </Button>
         <StackPanel
             Orientation="Horizontal"
             Grid.Row="1" Margin="0,1,0,18" Grid.RowSpan="3"
             
             >
-            <Viewbox Width="32" Height="32"
-                     Margin="10 0 0 0">
-                <Canvas Width="24" Height="24">
-                    <Path Data="M12,19.2C9.5,19.2 7.29,17.92 6,16C6.03,14 10,12.9 12,12.9C14,12.9 17.97,14 18,16C16.71,17.92 14.5,19.2 12,19.2M12,5A3,3 0 0,1 15,8A3,3 0 0,1 12,11A3,3 0 0,1 9,8A3,3 0 0,1 12,5M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12C22,6.47 17.5,2 12,2Z"
-                          Fill="Gray" />
-                </Canvas>
-            </Viewbox>
+            <materialDesign:PackIcon
+                Width="32" Height="32"
+                VerticalAlignment="Center"
+                Kind="AccountCircle"
+                Foreground="Gray"/>
+            
             <TextBlock
                 FontSize="16"
                 Foreground="Black"
@@ -124,13 +116,11 @@
                 materialDesign:HintAssist.Hint="Волков В."
                 />
 
-            <Viewbox Width="32" Height="32"
-                     Margin="10 0 10 0">
-                <Canvas Width="24" Height="24">
-                    <Path Data="M14,12H10V10H14M14,16H10V14H14M20,8H17.19C16.74,7.22 16.12,6.55 15.37,6.04L17,4.41L15.59,3L13.42,5.17C12.96,5.06 12.5,5 12,5C11.5,5 11.04,5.06 10.59,5.17L8.41,3L7,4.41L8.62,6.04C7.88,6.55 7.26,7.22 6.81,8H4V10H6.09C6.04,10.33 6,10.66 6,11V12H4V14H6V15C6,15.34 6.04,15.67 6.09,16H4V18H6.81C7.85,19.79 9.78,21 12,21C14.22,21 16.15,19.79 17.19,18H20V16H17.91C17.96,15.67 18,15.34 18,15V14H20V12H18V11C18,10.66 17.96,10.33 17.91,10H20V8Z"
-                          Fill="Gray" />
-                </Canvas>
-            </Viewbox>
+            <materialDesign:PackIcon
+                Width="32" Height="32"
+                VerticalAlignment="Center"
+                Kind="Bug"
+                Foreground="Gray"/>
             <ComboBox
                 x:Name="ComPort"
                 Style="{StaticResource MaterialDesignComboBox}"
