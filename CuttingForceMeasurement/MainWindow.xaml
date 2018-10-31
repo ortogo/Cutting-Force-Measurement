@@ -16,11 +16,12 @@
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
-     FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png"
+     FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png" AllowsTransparency="True" WindowStyle="None"
         >
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
+            <RowDefinition Height="48"/>
             <RowDefinition Height="48"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
@@ -30,7 +31,7 @@
             MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
             Orientation="Horizontal"
             Background="{DynamicResource PrimaryHueMidBrush}"
-            Grid.Row="0" Margin="0,0,0,47" Grid.RowSpan="2"/>
+            Grid.Row="0"/>
 
         <TextBlock
                 Grid.Row="0"
@@ -38,8 +39,7 @@
                 Foreground="{DynamicResource MaterialDesignPaper}"
                 FontSize="16"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Center" Margin="287,7,286,5"
-                />
+                HorizontalAlignment="Center"/>
 
         <Button 
                 x:Name="Settings"
@@ -81,9 +81,7 @@
         </Button>
         <StackPanel
             Orientation="Horizontal"
-            Grid.Row="1" Margin="0,1,0,18" Grid.RowSpan="3"
-            
-            >
+            Grid.Row="1">
             <materialDesign:PackIcon
                 Width="32" Height="32"
                 VerticalAlignment="Center"
@@ -121,6 +119,7 @@
                 VerticalAlignment="Center"
                 Kind="Bug"
                 Foreground="Gray"/>
+            
             <ComboBox
                 x:Name="ComPort"
                 Style="{StaticResource MaterialDesignComboBox}"
@@ -147,9 +146,46 @@
                 Margin="10 0 0 0"
                 IsChecked="True" />
         </StackPanel>
+        <StackPanel
+            Grid.Row="2"
+            Orientation="Horizontal"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center">
+            <Button
+                Width="124"
+                Margin="10 0 0 0"
+                Style="{DynamicResource MaterialDesignRaisedAccentButton}">
+                Записать
+            </Button>
+            <Button
+                Width="124"
+                Margin="10 0 0 0"
+                Style="{DynamicResource MaterialDesignRaisedButton}">
+                Сохранить
+            </Button>
+            <Button
+                Width="124"
+                Margin="10 0 0 0"
+                Style="{DynamicResource MaterialDesignRaisedButton}">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock
+                        VerticalAlignment="Center">Экспорт</TextBlock>
+                    <materialDesign:PackIcon
+                        Kind="FileExcel" 
+                        Height="24" Width="24"
+                        Margin="2 0 0 0"/>
+                </StackPanel>
+            </Button>
+            <Button
+                Width="124"
+                Margin="10 0 0 0"
+                Style="{DynamicResource MaterialDesignRaisedButton}">
+                Сбросить
+            </Button>
+        </StackPanel>
         <materialDesign:DialogHost
             x:Name="ExitDialog"
-            Grid.Row="2"
+            Grid.Row="3"
             DialogClosing="DialogHost_DialogClosing"
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
