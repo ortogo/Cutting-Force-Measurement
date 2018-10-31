@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MaterialDesignThemes.Wpf;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,10 +26,9 @@ namespace CuttingForceMeasurement
             InitializeComponent();
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private  void Exit_Click(object sender, RoutedEventArgs e)
         {
-            // TODO: Add exit dialog
-            Close();
+            ExitDialog.IsOpen = true;
         }
 
         private void NavigationBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -39,6 +39,12 @@ namespace CuttingForceMeasurement
         private void MinimizeWindow_Click(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void DialogHost_DialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
+        {
+            if (!Equals(eventArgs.Parameter, true)) return;
+            Close();
         }
     }
 }

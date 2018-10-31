@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:CuttingForceMeasurement"
         mc:Ignorable="d"
         Title="Измерение усилия на резце"
@@ -29,17 +30,17 @@
             MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
             Orientation="Horizontal"
             Background="{DynamicResource PrimaryHueMidBrush}"
-            Grid.Row="0"/>
-        
-            <TextBlock
+            Grid.Row="0" Margin="0,0,0,47" Grid.RowSpan="2"/>
+
+        <TextBlock
                 Grid.Row="0"
                 Text="Измерение усилия на резце" 
                 Foreground="{DynamicResource MaterialDesignPaper}"
                 FontSize="16"
                 VerticalAlignment="Center"
-                HorizontalAlignment="Center"
+                HorizontalAlignment="Center" Margin="287,7,286,5"
                 />
-        
+
         <Button 
                 x:Name="Settings"
             Grid.Row="0"
@@ -87,7 +88,7 @@
         </Button>
         <StackPanel
             Orientation="Horizontal"
-            Grid.Row="1"
+            Grid.Row="1" Margin="0,1,0,18" Grid.RowSpan="3"
             
             >
             <Viewbox Width="32" Height="32"
@@ -103,7 +104,7 @@
                 VerticalAlignment="Center"
                 Margin="10 0 10 0"
                 >
-                Выполнил 
+                Выполнил
             </TextBlock>
             <TextBox
                 x:Name="GroupName"
@@ -156,6 +157,37 @@
                 Margin="10 0 0 0"
                 IsChecked="True" />
         </StackPanel>
-        
+        <materialDesign:DialogHost
+            x:Name="ExitDialog"
+            Grid.Row="2"
+            DialogClosing="DialogHost_DialogClosing"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock>Вы действительно все сохранили и желаете закрыть приложение?</TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsDefault="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean>True</system:Boolean>
+                            </Button.CommandParameter>
+                            Согласен
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean>False</system:Boolean>
+                            </Button.CommandParameter>
+                            Нет
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
     </Grid>
 </Window>
