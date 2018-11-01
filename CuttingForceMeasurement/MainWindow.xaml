@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:local="clr-namespace:CuttingForceMeasurement"
         mc:Ignorable="d"
         Title="Измерение усилия на резце"
@@ -24,6 +25,7 @@
             <RowDefinition Height="48"/>
             <RowDefinition Height="48"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="48"/>
         </Grid.RowDefinitions>
         <!-- Navigation Bar -->
         <StackPanel
@@ -84,6 +86,7 @@
             Grid.Row="1">
             <materialDesign:PackIcon
                 Width="32" Height="32"
+                Margin="10 0 0 0"
                 VerticalAlignment="Center"
                 Kind="AccountCircle"
                 Foreground="Gray"/>
@@ -92,13 +95,14 @@
                 FontSize="16"
                 Foreground="Black"
                 VerticalAlignment="Center"
-                Margin="10 0 10 0"
+                Margin="10 0 0 0"
                 >
                 Выполнил
             </TextBlock>
             <TextBox
                 x:Name="GroupName"
                 Width="124" Height="32"
+                Margin="10 0 0 0"
                 Style="{DynamicResource MaterialDesignTextBox}"
                 FontSize="16"
                 Foreground="Black"
@@ -116,6 +120,7 @@
 
             <materialDesign:PackIcon
                 Width="32" Height="32"
+                Margin="10 0 0 0"
                 VerticalAlignment="Center"
                 Kind="Bug"
                 Foreground="Gray"/>
@@ -124,6 +129,7 @@
                 x:Name="ComPort"
                 Style="{StaticResource MaterialDesignComboBox}"
                 Height="32" Width="128"
+                Margin="10 0 0 0"
                 FontSize="16"
                 materialDesign:HintAssist.Hint="COM Port"
                 ToolTip="Выберите COM к которому подключен прибор"
@@ -136,7 +142,7 @@
                 FontSize="16"
                 Foreground="Black"
                 VerticalAlignment="Center"
-                Margin="20 0 0 0"
+                Margin="24 0 0 0"
                 >
                 Демо режим
             </TextBlock>
@@ -144,7 +150,7 @@
                 x:Name="DemoMode"
                 Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
                 Margin="10 0 0 0"
-                IsChecked="True" />
+                IsChecked="False" />
         </StackPanel>
         <StackPanel
             Grid.Row="2"
@@ -183,6 +189,102 @@
                 Сбросить
             </Button>
         </StackPanel>
+        <StackPanel
+            Grid.Row="3"
+            Margin="10 0 10 0">
+            <materialDesign:Card Padding="10">
+                <TextBlock
+                VerticalAlignment="Center">
+                Время записи: -
+                </TextBlock>
+            </materialDesign:Card>
+            <materialDesign:Card Padding="10 0 10 0" Margin="0 10 0">
+                <ListView 
+                Width="740"
+                Height="256"
+                x:Name="DataTable" 
+                ItemsSource="{DynamicResource ResourceKey=sensors}" >
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Time}">
+                                <TextBlock  TextAlignment="Center">
+                                Время,
+                            <LineBreak />
+                                мс
+                                </TextBlock>
+                            </GridViewColumn>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Acceleration}">
+                                <TextBlock  TextAlignment="Center">
+                                Ускорение,
+                            <LineBreak />
+                                м/с<Run BaselineAlignment="Superscript" FontSize="8">2</Run>
+                                </TextBlock>
+                            </GridViewColumn>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Force}">
+                                <TextBlock  TextAlignment="Center">
+                                Усилие,
+                            <LineBreak />
+                                кН
+                                </TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Voltage}">
+                                <TextBlock  TextAlignment="Center">
+                                Напряжение,
+                            <LineBreak />
+                                В
+                                </TextBlock>
+
+                            </GridViewColumn>
+                            <GridViewColumn  Width="120" DisplayMemberBinding="{Binding Path=Amperage}">
+                                <TextBlock TextAlignment="Center">
+                                Ток,
+                            <LineBreak />
+                                 А
+                                </TextBlock>
+                            </GridViewColumn>
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Rpm}">
+                                <TextBlock  TextAlignment="Center">
+                                Обороты,
+                            <LineBreak />
+                                микросек
+                                <Run BaselineAlignment="Superscript" FontSize="8">-1</Run>
+                                </TextBlock>
+                            </GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                    <ListView.Resources>
+                        <collections:ArrayList x:Key="sensors">
+                            <local:SensorDataItem
+                            Time="0" 
+                            Acceleration="10"
+                            Force="100"
+                            Amperage="4"
+                            Voltage="220"
+                            Rpm="50000"/>
+                            <local:SensorDataItem 
+                            Time="20" 
+                            Acceleration="7"
+                            Force="120"
+                            Amperage="4.5"
+                            Voltage="219"
+                            Rpm="5000"/>
+                            <local:SensorDataItem 
+                            Time="30" 
+                            Acceleration="10"
+                            Force="110"
+                            Amperage="4.2"
+                            Voltage="220"
+                            Rpm="4900"/>
+                        </collections:ArrayList>
+                    </ListView.Resources>
+                </ListView>
+            </materialDesign:Card>
+        </StackPanel>
+        <StackPanel 
+            Grid.Row="4"
+            Background="LightGray"
+            ></StackPanel>
         <materialDesign:DialogHost
             x:Name="ExitDialog"
             Grid.Row="3"
