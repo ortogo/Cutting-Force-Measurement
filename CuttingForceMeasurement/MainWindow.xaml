@@ -149,7 +149,9 @@
                 x:Name="DemoMode"
                 Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
                 Margin="10 0 0 0"
-                IsChecked="False" />
+                Checked="OnDemoMode"
+                Unchecked="OffDemoMode"
+                />
         </StackPanel>
         <StackPanel
             Grid.Row="2"
@@ -260,7 +262,7 @@
                             Force="100"
                             Amperage="4"
                             Voltage="220"
-                            Rpm="50000"/>
+                            Rpm="5000"/>
                             <local:SensorDataItem 
                             Time="20" 
                             Acceleration="7"

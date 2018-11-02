@@ -21,6 +21,8 @@ namespace CuttingForceMeasurement
     /// </summary>
     public partial class MainWindow : Window
     {
+        private bool isDemoMode = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -46,5 +48,18 @@ namespace CuttingForceMeasurement
             if (!Equals(eventArgs.Parameter, true)) return;
             Close();
         }
+
+        private void OnDemoMode(object sender, RoutedEventArgs e)
+        {
+            isDemoMode = true;
+            ComPort.IsEnabled = false;
+        }
+
+        private void OffDemoMode(object sender, RoutedEventArgs e)
+        {
+            isDemoMode = false;
+            ComPort.IsEnabled = true;
+        }
+
     }
 }
