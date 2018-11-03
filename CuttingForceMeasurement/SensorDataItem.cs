@@ -21,5 +21,10 @@ namespace CuttingForceMeasurement
         public double Amperage { get; set; }
         // Частота оборотов, об/микросек
         public double Rpm { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Time}\t{Acceleration}\t{Force}\t{Voltage}\t{Amperage}\t{Rpm}";
+        }
     }
 }

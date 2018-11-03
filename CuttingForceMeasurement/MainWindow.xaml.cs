@@ -1,6 +1,7 @@
 ﻿using MaterialDesignThemes.Wpf;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,22 @@ namespace CuttingForceMeasurement
     public partial class MainWindow : Window
     {
         private bool isDemoMode = false;
+        public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
 
         public MainWindow()
         {
             InitializeComponent();
+            //this.DataContext = this;
+            this.SensorsDataTable.ItemsSource = this.SensorsData;
+            SensorDataItem se = new SensorDataItem();
+            se.Time = 10;
+            se.Acceleration = 100;
+            se.Force = 120;
+            se.Voltage = 220;
+            se.Amperage = 4.5;
+            se.Rpm = 2000;
+            Console.WriteLine(se);
+            SensorsData.Add(se);
         }
 
         private  void Exit_Click(object sender, RoutedEventArgs e)
