@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,6 +29,9 @@ namespace CuttingForceMeasurement
         public MainWindow()
         {
             InitializeComponent();
+
+            LoadSerialPorts();
+
             //this.DataContext = this;
             this.SensorsDataTable.ItemsSource = this.SensorsData;
             SensorDataItem se = new SensorDataItem();
@@ -39,6 +43,39 @@ namespace CuttingForceMeasurement
             se.Rpm = 2000;
             Console.WriteLine(se);
             SensorsData.Add(se);
+        }
+
+        private void LoadSerialPorts()
+        {
+            // Loading state
+            this.ComPort.IsEnabled = false;
+            
+
+            this.ComPort.Items.Clear();
+            this.ComPort.Items.Add("Загрузка");
+            this.ComPort.SelectedIndex = 0;
+
+            // Get list of available serial ports
+            string[] ports = SerialPort.GetPortNames();
+            if (ports.Length <= 0)
+            {
+                // Set empty state for list
+                this.ComPort.Items.Clear();
+                this.ComPort.Items.Add("Пусто");
+                this.ComPort.SelectedIndex = 0;
+            } else
+            {
+                // Set loaded ports
+                this.ComPort.IsEnabled = true;
+                this.ComPort.Items.Clear();
+                foreach (string port in ports) {
+                    this.ComPort.Items.Add(port);
+                }
+                
+                this.ComPort.SelectedIndex = 0;
+            }
+            
+            
         }
 
         private  void Exit_Click(object sender, RoutedEventArgs e)
@@ -70,6 +107,7 @@ namespace CuttingForceMeasurement
 
         private void OffDemoMode(object sender, RoutedEventArgs e)
         {
+            LoadSerialPorts();
             isDemoMode = false;
             ComPort.IsEnabled = true;
         }
