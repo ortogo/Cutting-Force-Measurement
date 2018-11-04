@@ -135,7 +135,7 @@
                 ToolTip="Выберите COM к которому подключен прибор"
                 IsEnabled="False"
                 >
-                <ComboBoxItem IsSelected="True">Загрузка...</ComboBoxItem>
+                <ComboBoxItem IsSelected="True">Загрузка</ComboBoxItem>
             </ComboBox>
             <TextBlock
                 FontSize="16"
