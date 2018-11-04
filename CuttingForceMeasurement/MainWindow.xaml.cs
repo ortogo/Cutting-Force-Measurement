@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -112,5 +113,55 @@ namespace CuttingForceMeasurement
             ComPort.IsEnabled = true;
         }
 
+        private async void Record_Click(object sender, RoutedEventArgs e)
+        {
+            await Task.Factory.StartNew(() => SensorsDataReader.Read(this),
+                                TaskCreationOptions.LongRunning);
+        }
+
+        public void UpdateSensorsData(SensorDataItem sensorDataItem)
+        {
+            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                SensorsData.Add(sensorDataItem);
+            });
+            
+        }
+
+        public void SetTimeReading(int time)
+        {
+            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                this.TimeRecording.Text = (time.ToString());
+            });
+            
+        }
+
+        class SensorsDataReader
+        {
+            public static void Read(MainWindow main)
+            {
+                Random rand = new Random();
+                for (var i = 0; i < 20; i++)
+                {
+                    SensorDataItem se = new SensorDataItem();
+                    se.Time = 10+i*2;
+                    se.Acceleration = rand.Next(0, 100);
+                    se.Force = rand.Next(0, 100);
+                    se.Voltage = rand.Next(200, 220);
+                    se.Amperage = 3.5 + Math.Round(rand.NextDouble(), 2) * 2.5;
+                    se.Rpm = rand.Next(2800, 2975);
+                    main.UpdateSensorsData(se);
+                    main.SetTimeReading(i);
+                    Task.Delay(100).Wait();
+                }
+            }
+        }
+
+        private void Reset_Click(object sender, RoutedEventArgs e)
+        {
+            this.TimeRecording.Text = "готов";
+            this.SensorsData.Clear();
+        }
     }
 }

@@ -162,7 +162,8 @@
                 x:Name="Record"
                 Width="124"
                 Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedAccentButton}">
+                Style="{DynamicResource MaterialDesignRaisedAccentButton}"
+                Click="Record_Click">
                 Записать
             </Button>
             <Button
@@ -190,7 +191,8 @@
                 x:Name="Reset"
                 Width="124"
                 Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedButton}">
+                Style="{DynamicResource MaterialDesignRaisedButton}"
+                Click="Reset_Click">
                 Сбросить
             </Button>
         </StackPanel>
@@ -207,7 +209,8 @@
                 <ListView 
                 Width="740"
                 Height="295"
-                x:Name="SensorsDataTable" 
+                x:Name="SensorsDataTable"
+                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                 >
                     <ListView.View>
                         <GridView>
