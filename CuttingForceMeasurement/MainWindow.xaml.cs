@@ -215,7 +215,7 @@ namespace CuttingForceMeasurement
 
         private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            
+            ResetAll();
         }
 
         private void ResetAll()
