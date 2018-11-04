@@ -24,7 +24,11 @@ namespace CuttingForceMeasurement
     /// </summary>
     public partial class MainWindow : Window
     {
+        const string SerialsEmptyString = "(отсутствуют)";
+
         private bool isDemoMode = false;
+        private SensorsData CurrentSensorsData;
+
         public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
 
         public MainWindow()
@@ -35,15 +39,6 @@ namespace CuttingForceMeasurement
 
             //this.DataContext = this;
             this.SensorsDataTable.ItemsSource = this.SensorsData;
-            SensorDataItem se = new SensorDataItem();
-            se.Time = 10;
-            se.Acceleration = 100;
-            se.Force = 120;
-            se.Voltage = 220;
-            se.Amperage = 4.5;
-            se.Rpm = 2000;
-            Console.WriteLine(se);
-            SensorsData.Add(se);
         }
 
         private void LoadSerialPorts()
@@ -62,7 +57,7 @@ namespace CuttingForceMeasurement
             {
                 // Set empty state for list
                 this.ComPort.Items.Clear();
-                this.ComPort.Items.Add("Пусто");
+                this.ComPort.Items.Add(SerialsEmptyString);
                 this.ComPort.SelectedIndex = 0;
             } else
             {
@@ -100,10 +95,18 @@ namespace CuttingForceMeasurement
             Close();
         }
 
+        private string oldGroupName = "";
+        private string oldStudentName = "";
+
         private void OnDemoMode(object sender, RoutedEventArgs e)
         {
             isDemoMode = true;
             ComPort.IsEnabled = false;
+            oldGroupName = GroupName.Text;
+            oldStudentName = StudentName.Text;
+            GroupName.Text = "Demo";
+            StudentName.Text = "Student I.";
+
         }
 
         private void OffDemoMode(object sender, RoutedEventArgs e)
@@ -111,12 +114,73 @@ namespace CuttingForceMeasurement
             LoadSerialPorts();
             isDemoMode = false;
             ComPort.IsEnabled = true;
+            GroupName.Text = oldGroupName;
+            StudentName.Text = oldStudentName;
         }
 
-        private async void Record_Click(object sender, RoutedEventArgs e)
+        private void ShowMessage(string text)
         {
-            await Task.Factory.StartNew(() => SensorsDataReader.Read(this),
-                                TaskCreationOptions.LongRunning);
+            this.TextMessageDialog.Text = text;
+            this.MessageDialog.IsOpen = true;
+        }
+
+        private void MessageDialog_ClosingConnectSensors(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
+        {
+            this.MessageDialog.DialogClosing -= MessageDialog_ClosingConnectSensors;
+            MessageDialogButtonOk.Content = "Хорошо";
+        }
+
+        private void Record_Click(object sender, RoutedEventArgs e)
+        {
+            if (!isDemoMode)
+            {
+                if (GroupName.Text.Length == 0)
+                {
+                    ShowMessage("Введите имя группы");
+                    return;
+                }
+                if (StudentName.Text.Length == 0)
+                {
+                    ShowMessage("Введите Вашу фамилию и инициалы");
+                    return;
+                }
+                if (ComPort.SelectedValue.ToString() == SerialsEmptyString)
+                {
+                    this.TextMessageDialog.Text = "Устройство не подключено! Подключите и нажмите Продолжить";
+                    this.MessageDialog.DialogClosing += MessageDialog_ClosingConnectSensors;
+                    MessageDialogButtonOk.Content = "Продолжить";
+                    this.MessageDialog.IsOpen = true;
+                    return;
+                }
+            }
+            if (CurrentSensorsData != null)
+            {
+                if (CurrentSensorsData.IsReading)
+                {
+                    this.Record.Content = "Запустить";
+                    CurrentSensorsData.Stop();
+                    CurrentSensorsData = null;
+                }
+            } else
+            {
+                this.ResetAll();
+                this.Record.Content = "Остановить";
+                if (isDemoMode)
+                {
+                    CurrentSensorsData = new SensorsDataRandom(this);
+                }
+                else
+                {
+                    /* var tsw = new TestSerialWriter();
+                    Thread ts = new Thread(tsw.Write);
+                    ts.Start();
+                    */
+                    CurrentSensorsData = new SensorsDataSerial(this, ComPort.SelectedValue.ToString());
+                }
+                Thread t = new Thread(CurrentSensorsData.Read);
+                t.Start();
+            }
+           
         }
 
         public void UpdateSensorsData(SensorDataItem sensorDataItem)
@@ -128,6 +192,16 @@ namespace CuttingForceMeasurement
             
         }
 
+        public void TriggerErrorReading(Exception e)
+        {
+            this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
+            {
+                this.StopReading();
+                this.ShowMessage("Проблемы: " + e.Message);
+            });
+
+        }
+
         public void SetTimeReading(int time)
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
@@ -137,31 +211,66 @@ namespace CuttingForceMeasurement
             
         }
 
-        class SensorsDataReader
+        private void Reset_Click(object sender, RoutedEventArgs e)
         {
-            public static void Read(MainWindow main)
+            
+        }
+
+        private void ResetAll()
+        {
+            this.TimeRecording.Text = "готов";
+            this.SensorsData.Clear();
+            this.StopReading();
+        }
+
+        private void StopReading()
+        {
+            if (CurrentSensorsData != null)
             {
-                Random rand = new Random();
-                for (var i = 0; i < 20; i++)
+                if (CurrentSensorsData.IsReading)
                 {
-                    SensorDataItem se = new SensorDataItem();
-                    se.Time = 10+i*2;
-                    se.Acceleration = rand.Next(0, 100);
-                    se.Force = rand.Next(0, 100);
-                    se.Voltage = rand.Next(200, 220);
-                    se.Amperage = 3.5 + Math.Round(rand.NextDouble(), 2) * 2.5;
-                    se.Rpm = rand.Next(2800, 2975);
-                    main.UpdateSensorsData(se);
-                    main.SetTimeReading(i);
-                    Task.Delay(100).Wait();
+                    this.Record.Content = "Запустить";
+                    CurrentSensorsData.Stop();
+                    CurrentSensorsData = null;
                 }
             }
         }
 
-        private void Reset_Click(object sender, RoutedEventArgs e)
+        class TestSerialWriter
         {
-            this.TimeRecording.Text = "готов";
-            this.SensorsData.Clear();
+            private Random Rand;
+            private SerialPort Serial;
+            private int count = 0;
+
+            public TestSerialWriter()
+            {
+                Rand = new Random();
+                Serial = new SerialPort();
+                Serial.PortName = "COM1";
+                Serial.Open();
+            }
+
+            public void Stop()
+            {
+                Serial.Close();
+            }
+
+            public void Write()
+            {
+                while (true)
+                {
+                    SensorDataItem se = new SensorDataItem();
+                    se.Time = count;
+                    se.Acceleration = Rand.Next(0, 100);
+                    se.Force = Rand.Next(0, 100);
+                    se.Voltage = Rand.Next(200, 220);
+                    se.Amperage = 3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5;
+                    se.Rpm = Rand.Next(2800, 2975);
+                    Serial.WriteLine(se.ToString());
+                    count++;
+                    Task.Delay(50).Wait();
+                }
+            }
         }
     }
 }

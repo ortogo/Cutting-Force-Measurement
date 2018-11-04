@@ -90,6 +90,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="SensorDataItem.cs" />
+    <Compile Include="SensorsData.cs" />
+    <Compile Include="SensorsDataRandom.cs" />
+    <Compile Include="SensorsDataSerial.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

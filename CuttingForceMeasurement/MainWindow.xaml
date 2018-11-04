@@ -275,10 +275,13 @@
                 <StackPanel Margin="16">
                     <TextBlock>Вы действительно все сохранили и желаете закрыть приложение?</TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                        <Button 
+                                Style="{StaticResource MaterialDesignFlatButton}"
                                         IsDefault="True"
                                         Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                                        Command="materialDesign:DialogHost.CloseDialogCommand"
+                                
+                                >
                             <Button.CommandParameter>
                                 <system:Boolean>True</system:Boolean>
                             </Button.CommandParameter>
@@ -292,6 +295,31 @@
                                 <system:Boolean>False</system:Boolean>
                             </Button.CommandParameter>
                             Нет
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        
+        <materialDesign:DialogHost
+            x:Name="MessageDialog"
+            Grid.Row="3"
+            
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock x:Name="TextMessageDialog"></TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button x:Name="MessageDialogButtonOk"
+                            Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsDefault="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean>True</system:Boolean>
+                            </Button.CommandParameter>
+                            Хорошо
                         </Button>
                     </StackPanel>
                 </StackPanel>
