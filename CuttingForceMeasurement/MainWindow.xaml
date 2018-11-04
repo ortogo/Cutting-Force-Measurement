@@ -202,7 +202,7 @@
             <materialDesign:Card Padding="10">
                 <TextBlock
                 VerticalAlignment="Center">
-                Время записи: <Run x:Name="TimeRecording">0</Run>
+                Время записи: <Run x:Name="TimeRecording">готов</Run>
                 </TextBlock>
             </materialDesign:Card>
             <materialDesign:Card Padding="10 0 10 0" Margin="0 10 0 0">
