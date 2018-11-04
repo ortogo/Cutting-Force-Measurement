@@ -170,7 +170,8 @@
                 x:Name="Save"
                 Width="124"
                 Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedButton}">
+                Style="{DynamicResource MaterialDesignRaisedButton}"
+                Click="Save_Click">
                 Сохранить
             </Button>
             <Button

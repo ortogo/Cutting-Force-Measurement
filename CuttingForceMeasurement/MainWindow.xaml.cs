@@ -1,7 +1,9 @@
 ﻿using MaterialDesignThemes.Wpf;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
@@ -271,6 +273,34 @@ namespace CuttingForceMeasurement
                     Task.Delay(50).Wait();
                 }
             }
+        }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            if(SensorsData.Count() <= 0)
+            {
+                ShowMessage("Сначала запишите данные датчиков");
+                return;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+            saveFileDialog.DefaultExt = "txt";
+            var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            saveFileDialog.InitialDirectory = desctopPath;
+            saveFileDialog.FileName = $"{desctopPath}\\{GroupName.Text} {StudentName.Text}.txt";
+            if (saveFileDialog.ShowDialog() == true)
+                File.WriteAllText(saveFileDialog.FileName, SerializeToText());
+        }
+
+        private string SerializeToText()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("Время, мс\tУскорение, м/с^2\tУсилие, кН\tНапряжение, В\tТок, А\tЧастота об/микросек\t");
+            foreach(SensorDataItem sdi in SensorsData)
+            {
+                sb.AppendLine(sdi.ToString());
+            }
+            return sb.ToString();
         }
     }
 }
