@@ -1,7 +1,5 @@
-﻿using MaterialDesignThemes.Wpf;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Ports;
@@ -10,14 +8,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using OfficeOpenXml;
 
 namespace CuttingForceMeasurement
 {
@@ -301,6 +293,48 @@ namespace CuttingForceMeasurement
                 sb.AppendLine(sdi.ToString());
             }
             return sb.ToString();
+        }
+
+        private void ExportExcel_Click(object sender, RoutedEventArgs e)
+        {
+            if (SensorsData.Count() <= 0)
+            {
+                ShowMessage("Сначала запишите данные датчиков");
+                return;
+            }
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Книга Excel (*.xlsx)|*.xlsx";
+            saveFileDialog.DefaultExt = "xlsx";
+            var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            saveFileDialog.InitialDirectory = desctopPath;
+            saveFileDialog.FileName = $"{GroupName.Text} {StudentName.Text}.xlsx";
+            
+            if (saveFileDialog.ShowDialog() == true)
+            {
+                using (var p = new ExcelPackage())
+                { 
+                    var ws = p.Workbook.Worksheets.Add("Результаты");
+                    ws.Cells["A1"].Value = "Время, мс";
+                    ws.Cells["B1"].Value = "Ускорение, м / с ^ 2";
+                    ws.Cells["C1"].Value = "Усилие, кН";
+                    ws.Cells["D1"].Value = "Напряжение, В";
+                    ws.Cells["E1"].Value = "Ток, А";
+                    ws.Cells["F1"].Value = "Частота об/ микросек";
+
+                    for (int i = 2; i < SensorsData.Count() + 2; i++ )
+                    {
+                        var sdi = SensorsData[i-2];
+                        ws.Cells[i, 1].Value = sdi.Time;
+                        ws.Cells[i, 2].Value = sdi.Acceleration;
+                        ws.Cells[i, 3].Value = sdi.Force;
+                        ws.Cells[i, 4].Value = sdi.Voltage;
+                        ws.Cells[i, 5].Value = sdi.Amperage;
+                        ws.Cells[i, 6].Value = sdi.Rpm;
+                    }
+                    p.SaveAs(new FileInfo(saveFileDialog.FileName));
+                    ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                }
+            }
         }
     }
 }
