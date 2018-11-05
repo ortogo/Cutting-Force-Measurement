@@ -99,7 +99,7 @@ namespace CuttingForceMeasurement
             oldGroupName = GroupName.Text;
             oldStudentName = StudentName.Text;
             GroupName.Text = "Demo";
-            StudentName.Text = "Student I.";
+            StudentName.Text = "Student I";
 
         }
 
