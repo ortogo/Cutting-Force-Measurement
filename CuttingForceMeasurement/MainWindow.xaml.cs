@@ -275,7 +275,7 @@ namespace CuttingForceMeasurement
                 return;
             }
             SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Text file (*.txt)|*.txt";
+            saveFileDialog.Filter = "Текст (*.txt)|*.txt";
             saveFileDialog.DefaultExt = "txt";
             var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             saveFileDialog.InitialDirectory = desctopPath;
