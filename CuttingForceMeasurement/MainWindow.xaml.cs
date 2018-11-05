@@ -39,7 +39,7 @@ namespace CuttingForceMeasurement
         {
             // Loading state
             this.ComPort.IsEnabled = false;
-            
+
 
             this.ComPort.Items.Clear();
             this.ComPort.Items.Add("Загрузка");
@@ -53,22 +53,24 @@ namespace CuttingForceMeasurement
                 this.ComPort.Items.Clear();
                 this.ComPort.Items.Add(SerialsEmptyString);
                 this.ComPort.SelectedIndex = 0;
-            } else
+            }
+            else
             {
                 // Set loaded ports
                 this.ComPort.IsEnabled = true;
                 this.ComPort.Items.Clear();
-                foreach (string port in ports) {
+                foreach (string port in ports)
+                {
                     this.ComPort.Items.Add(port);
                 }
-                
+
                 this.ComPort.SelectedIndex = 0;
             }
-            
-            
+
+
         }
 
-        private  void Exit_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
             ExitDialog.IsOpen = true;
         }
@@ -155,7 +157,8 @@ namespace CuttingForceMeasurement
                     CurrentSensorsData.Stop();
                     CurrentSensorsData = null;
                 }
-            } else
+            }
+            else
             {
                 this.ResetAll();
                 this.Record.Content = "Остановить";
@@ -174,7 +177,7 @@ namespace CuttingForceMeasurement
                 Thread t = new Thread(CurrentSensorsData.Read);
                 t.Start();
             }
-           
+
         }
 
         public void UpdateSensorsData(SensorDataItem sensorDataItem)
@@ -183,7 +186,7 @@ namespace CuttingForceMeasurement
             {
                 SensorsData.Add(sensorDataItem);
             });
-            
+
         }
 
         public void TriggerErrorReading(Exception e)
@@ -202,7 +205,7 @@ namespace CuttingForceMeasurement
             {
                 this.TimeRecording.Text = (time.ToString());
             });
-            
+
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e)
@@ -269,7 +272,7 @@ namespace CuttingForceMeasurement
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            if(SensorsData.Count() <= 0)
+            if (SensorsData.Count() <= 0)
             {
                 ShowMessage("Сначала запишите данные датчиков");
                 return;
@@ -282,8 +285,15 @@ namespace CuttingForceMeasurement
             saveFileDialog.FileName = $"{desctopPath}\\{GroupName.Text} {StudentName.Text}.txt";
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.WriteAllText(saveFileDialog.FileName, SerializeToText());
-                ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                try
+                {
+                    File.WriteAllText(saveFileDialog.FileName, SerializeToText());
+                    ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage($"Ошибка сохранения {saveFileDialog.SafeFileName}: {ex.Message}");
+                }
             }
         }
 
@@ -291,7 +301,7 @@ namespace CuttingForceMeasurement
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine("Время, мс\tУскорение, м/с^2\tУсилие, кН\tНапряжение, В\tТок, А\tЧастота об/микросек\t");
-            foreach(SensorDataItem sdi in SensorsData)
+            foreach (SensorDataItem sdi in SensorsData)
             {
                 sb.AppendLine(sdi.ToString());
             }
@@ -311,11 +321,11 @@ namespace CuttingForceMeasurement
             var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             saveFileDialog.InitialDirectory = desctopPath;
             saveFileDialog.FileName = $"{GroupName.Text} {StudentName.Text}.xlsx";
-            
+
             if (saveFileDialog.ShowDialog() == true)
             {
                 using (var p = new ExcelPackage())
-                { 
+                {
                     var ws = p.Workbook.Worksheets.Add("Результаты");
                     ws.Cells["A1"].Value = "Время, мс";
                     ws.Cells["B1"].Value = "Ускорение, м / с ^ 2";
@@ -324,9 +334,9 @@ namespace CuttingForceMeasurement
                     ws.Cells["E1"].Value = "Ток, А";
                     ws.Cells["F1"].Value = "Частота об/ микросек";
 
-                    for (int i = 2; i < SensorsData.Count() + 2; i++ )
+                    for (int i = 2; i < SensorsData.Count() + 2; i++)
                     {
-                        var sdi = SensorsData[i-2];
+                        var sdi = SensorsData[i - 2];
                         ws.Cells[i, 1].Value = sdi.Time;
                         ws.Cells[i, 2].Value = sdi.Acceleration;
                         ws.Cells[i, 3].Value = sdi.Force;
@@ -334,8 +344,15 @@ namespace CuttingForceMeasurement
                         ws.Cells[i, 5].Value = sdi.Amperage;
                         ws.Cells[i, 6].Value = sdi.Rpm;
                     }
-                    p.SaveAs(new FileInfo(saveFileDialog.FileName));
-                    ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                    try
+                    {
+                        p.SaveAs(new FileInfo(saveFileDialog.FileName));
+                        ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                    }
+                    catch (Exception ex)
+                    {
+                        ShowMessage($"Ошибка сохранения {saveFileDialog.SafeFileName}: {ex.Message}");
+                    }
                 }
             }
         }
