@@ -281,7 +281,10 @@ namespace CuttingForceMeasurement
             saveFileDialog.InitialDirectory = desctopPath;
             saveFileDialog.FileName = $"{desctopPath}\\{GroupName.Text} {StudentName.Text}.txt";
             if (saveFileDialog.ShowDialog() == true)
+            {
                 File.WriteAllText(saveFileDialog.FileName, SerializeToText());
+                ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+            }
         }
 
         private string SerializeToText()
