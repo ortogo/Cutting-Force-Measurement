@@ -282,7 +282,7 @@ namespace CuttingForceMeasurement
             saveFileDialog.DefaultExt = "txt";
             var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             saveFileDialog.InitialDirectory = desctopPath;
-            saveFileDialog.FileName = $"{desctopPath}\\{GroupName.Text} {StudentName.Text}.txt";
+            saveFileDialog.FileName = $"{GroupName.Text} {StudentName.Text}.txt";
             if (saveFileDialog.ShowDialog() == true)
             {
                 try
