@@ -13,7 +13,7 @@ namespace CuttingForceMeasurement
 
         private string SerialPortName { get; set; }
         private SerialPort Sensors { get; set; }
-
+        
         private double? SensorsTime = null;
 
         public SensorsDataSerial(MainWindow main, string serial) : base(main)
@@ -21,6 +21,8 @@ namespace CuttingForceMeasurement
             SerialPortName = serial;
             Sensors = new SerialPort();
             Sensors.PortName = SerialPortName;
+            Sensors.BaudRate = main.CurrentSettings.BaudRate;
+            Sensors.DataBits = main.CurrentSettings.DataBits;
 
             try
             {
@@ -56,11 +58,11 @@ namespace CuttingForceMeasurement
                 SensorDataItem sdi = new SensorDataItem()
                 {
                     Time = sdiParams[0] - (double)SensorsTime,
-                    Acceleration = sdiParams[1],
-                    Force = sdiParams[2],
-                    Voltage = sdiParams[3],
-                    Amperage = sdiParams[4],
-                    Rpm = sdiParams[5],
+                    Acceleration = sdiParams[1] * Main.CurrentSettings.AccelerationCoef,
+                    Force = sdiParams[2] * Main.CurrentSettings.ForceCoef,
+                    Voltage = sdiParams[3] * Main.CurrentSettings.VoltageCoef,
+                    Amperage = sdiParams[4] * Main.CurrentSettings.AmperageCoef,
+                    Rpm = sdiParams[5] * Main.CurrentSettings.RpmCoef,
                 };
                 Main.UpdateSensorsData(sdi);
             }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
+        xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
         xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
         xmlns:local="clr-namespace:CuttingForceMeasurement"
         mc:Ignorable="d"
@@ -19,7 +20,7 @@
      Background="{DynamicResource MaterialDesignPaper}"
      FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png" AllowsTransparency="True" WindowStyle="None"
         >
-   
+
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="32"/>
@@ -42,18 +43,18 @@
                 FontSize="16"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"/>
-
         <Button 
-                x:Name="Settings"
-            Grid.Row="0"
-                HorizontalAlignment="Right"
-                Margin="0 0 78 0"
-                Padding="0"
-                Style="{DynamicResource MaterialDesignToolButton}">
+                        x:Name="Settings"
+                    Click="Settings_Click"
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 78 0"
+                        Padding="0"
+                        Style="{DynamicResource MaterialDesignToolButton}">
             <materialDesign:PackIcon
-                Width="24" Height="24"
-                Kind="Settings"
-                Foreground="{DynamicResource MaterialDesignPaper}"/>
+                            Width="24" Height="24"
+                            Kind="Settings"
+                            Foreground="{DynamicResource MaterialDesignPaper}"/>
         </Button>
         <Button
             x:Name="MinimizeWindow"
@@ -90,7 +91,7 @@
                 VerticalAlignment="Center"
                 Kind="AccountCircle"
                 Foreground="Gray"/>
-            
+
             <TextBlock
                 FontSize="16"
                 Foreground="Black"
@@ -124,7 +125,7 @@
                 VerticalAlignment="Center"
                 Kind="Bug"
                 Foreground="Gray"/>
-            
+
             <ComboBox
                 x:Name="ComPort"
                 Style="{StaticResource MaterialDesignComboBox}"
@@ -263,7 +264,7 @@
                             </GridViewColumn>
                         </GridView>
                     </ListView.View>
-                    
+
                 </ListView>
             </materialDesign:Card>
         </StackPanel>
@@ -302,7 +303,7 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
-        
+
         <materialDesign:DialogHost
             x:Name="MessageDialog"
             Grid.Row="3"
@@ -327,5 +328,81 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
+        <materialDesign:DialogHost
+            x:Name="SettingsDialog"
+            Identifier="SettingsDialog"
+            DialogClosing="SettingsDialog_DialogClosing"
+            CloseOnClickAway="True"
+            Grid.Row="0"
+            MaxHeight="480"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top"
+            >
+            <materialDesign:DialogHost.DialogContent >
+                <StackPanel Margin="10"
+                            >
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="10">
+                        Настройки
+                    </TextBlock>
+                    <StackPanel>
+                        <TextBlock 
+                            Margin="0 10 0 0"
+                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                            Text="Подключение к устройству"></TextBlock>
+                        <Border Margin="0 10 0 0" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" />
+                        <StackPanel Margin="10 0 10 0">
+                            <StackPanel Orientation="Horizontal" Height="48">
+                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Скорость"></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding BaudRate}"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="48">
+                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Число бит"></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding DataBits}"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                        <TextBlock 
+                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+                            Margin="0 10 0 0"
+                            Text="Поправочные коэффициенты"></TextBlock>
+                        <Border Margin="0 10 0 0" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" />
+                        <StackPanel Margin="10 0 10 0">
+                            <StackPanel Orientation="Horizontal"  Height="48">
+                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Ускорение"></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AccelerationCoef}"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="48">
+                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Усилие" ></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding ForceCoef}"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal"  Height="48">
+                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Напряжение"></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding VoltageCoef}"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="48">
+                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Ток"></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AmperageCoef}"></TextBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Horizontal" Height="48">
+                                <TextBlock VerticalAlignment="Center" Width="200" Text="Обороты"></TextBlock>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding RpmCoef}"></TextBox>
+                            </StackPanel>
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Height="48">
+                        <Button VerticalAlignment="Center"
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                IsDefault="True"
+                                Margin="0 10 10 0"
+                                HorizontalAlignment="Right"
+                                Command="materialDesign:DialogHost.CloseDialogCommand">
+                            Сохранить
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+                
+            </materialDesign:DialogHost.DialogContent>
+            
+        </materialDesign:DialogHost>
     </Grid>
+    
 </Window>

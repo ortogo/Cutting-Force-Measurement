@@ -19,11 +19,11 @@ namespace CuttingForceMeasurement
         {
             SensorDataItem se = new SensorDataItem();
             se.Time = count;
-            se.Acceleration = Rand.Next(0, 100);
-            se.Force = Rand.Next(0, 100);
-            se.Voltage = Rand.Next(200, 220);
-            se.Amperage = 3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5;
-            se.Rpm = Rand.Next(2800, 2975);
+            se.Acceleration = Rand.Next(0, 100) * Main.CurrentSettings.AccelerationCoef;
+            se.Force = Rand.Next(0, 100) * Main.CurrentSettings.ForceCoef;
+            se.Voltage = Rand.Next(200, 220) * Main.CurrentSettings.VoltageCoef;
+            se.Amperage = (3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5) * Main.CurrentSettings.AmperageCoef;
+            se.Rpm = Rand.Next(2800, 2975) * Main.CurrentSettings.RpmCoef;
             Main.UpdateSensorsData(se);
             Main.SetTimeReading(count);
             Task.Delay(100).Wait();

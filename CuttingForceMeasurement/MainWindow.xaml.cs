@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
 using OfficeOpenXml;
+using MaterialDesignThemes.Wpf;
 
 namespace CuttingForceMeasurement
 {
@@ -22,6 +23,7 @@ namespace CuttingForceMeasurement
 
         private bool isDemoMode = false;
         private SensorsData CurrentSensorsData;
+        public Settings CurrentSettings { get; set; }
 
         public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
 
@@ -30,8 +32,9 @@ namespace CuttingForceMeasurement
             InitializeComponent();
 
             LoadSerialPorts();
-
-            //this.DataContext = this;
+            CurrentSettings = new Settings();
+            CurrentSettings.Load();
+            SettingsDialog.DataContext = CurrentSettings;
             this.SensorsDataTable.ItemsSource = this.SensorsData;
         }
 
@@ -355,6 +358,16 @@ namespace CuttingForceMeasurement
                     }
                 }
             }
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsDialog.IsOpen = true;
+        }
+
+        private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            CurrentSettings.Save();
         }
     }
 }
