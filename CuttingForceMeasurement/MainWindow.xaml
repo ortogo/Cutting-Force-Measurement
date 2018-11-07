@@ -4,9 +4,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
-        xmlns:collections="clr-namespace:System.Collections;assembly=mscorlib"
-        xmlns:local="clr-namespace:CuttingForceMeasurement"
         mc:Ignorable="d"
         Title="Измерение усилия на резце"
         Height="480" Width="780"
@@ -37,6 +34,7 @@
             Grid.Row="0"/>
 
         <TextBlock
+            MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
                 Grid.Row="0"
                 Text="Измерение усилия на резце" 
                 Foreground="{DynamicResource MaterialDesignPaper}"
