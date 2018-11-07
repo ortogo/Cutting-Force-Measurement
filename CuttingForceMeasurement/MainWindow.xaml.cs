@@ -11,6 +11,8 @@ using System.Windows;
 using System.Windows.Input;
 using OfficeOpenXml;
 using MaterialDesignThemes.Wpf;
+using System.Text.RegularExpressions;
+using System.Windows.Controls;
 
 namespace CuttingForceMeasurement
 {
@@ -22,6 +24,8 @@ namespace CuttingForceMeasurement
         const string SerialsEmptyString = "(отсутствуют)";
 
         private bool isDemoMode = false;
+        private Regex doubleRegex = new Regex(@"^-?(\d+),?(\d*)$");
+        private Regex numberRegex = new Regex(@"\d");
         private SensorsData CurrentSensorsData;
         public Settings CurrentSettings { get; set; }
 
@@ -368,6 +372,55 @@ namespace CuttingForceMeasurement
         private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             CurrentSettings.Save();
+        }
+        
+        private void Double_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            TextBox tb = ((TextBox)sender);
+            if (e.Text == "-")
+            {
+                var pos = tb.CaretIndex;
+                if (((tb.Text.Length == 0) || !tb.Text.StartsWith("-")) && pos == 0)
+                {
+                   
+                    tb.Text = tb.Text.Insert(pos, e.Text);
+                    tb.CaretIndex = pos + 1;
+                }
+            }
+            
+            if (e.Text == "." || e.Text == ",")
+            {
+                if ((tb.Text.IndexOf(".") < 0))
+                {
+                    var pos = tb.CaretIndex;
+                    tb.Text = tb.Text.Insert(pos, ".");
+                    tb.CaretIndex = pos + 1;
+                }
+            }
+            if (numberRegex.IsMatch(e.Text))
+            {
+                var pos = tb.CaretIndex;
+                if (!(pos == 0 && tb.Text.StartsWith("-")))
+                {
+                    tb.Text = tb.Text.Insert(pos, e.Text);
+                    tb.CaretIndex = pos + 1;
+                }
+            }
+
+            e.Handled = true;
+        }
+
+        private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            TextBox tb = ((TextBox)sender);
+            if (numberRegex.IsMatch(e.Text))
+            {
+                var pos = tb.CaretIndex;
+                    tb.Text = tb.Text.Insert(pos, e.Text);
+                    tb.CaretIndex = pos + 1;
+            }
+
+            e.Handled = true;
         }
     }
 }

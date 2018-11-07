@@ -353,11 +353,11 @@
                         <StackPanel Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Скорость"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding BaudRate}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding BaudRate}"  PreviewTextInput="Number_PreviewTextInput"></TextBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Число бит"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding DataBits}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding DataBits}" PreviewTextInput="Number_PreviewTextInput"></TextBox>
                             </StackPanel>
                         </StackPanel>
                         <TextBlock 
@@ -368,23 +368,23 @@
                         <StackPanel Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal"  Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Ускорение"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AccelerationCoef}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AccelerationCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Усилие" ></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding ForceCoef}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding ForceCoef}" PreviewTextInput="Double_PreviewTextInput"></TextBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal"  Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Напряжение"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding VoltageCoef}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding VoltageCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Ток"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AmperageCoef}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AmperageCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock VerticalAlignment="Center" Width="200" Text="Обороты"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding RpmCoef}"></TextBox>
+                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding RpmCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
                             </StackPanel>
                         </StackPanel>
                     </StackPanel>
