@@ -29,6 +29,8 @@ namespace CuttingForceMeasurement
         public double AmperageCoef { get; set; }
         // Частота оборотов, об/микросек
         public double RpmCoef { get; set; }
+        // Демо режим
+        public bool DemoMode { get; set; }
 
         public void Save()
         {
@@ -74,6 +76,7 @@ namespace CuttingForceMeasurement
                 VoltageCoef = s.VoltageCoef;
                 AmperageCoef = s.AmperageCoef;
                 RpmCoef = s.RpmCoef;
+                DemoMode = s.DemoMode;
             }
 
         }
@@ -100,6 +103,7 @@ namespace CuttingForceMeasurement
             VoltageCoef = 1;
             AmperageCoef = 1;
             RpmCoef = 1;
+            DemoMode = false;
         }
     }
 }

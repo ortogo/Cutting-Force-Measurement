@@ -38,6 +38,10 @@ namespace CuttingForceMeasurement
             LoadSerialPorts();
             CurrentSettings = new Settings();
             CurrentSettings.Load();
+            if (CurrentSettings.DemoMode)
+            {
+                OnDemoMode(null, null);
+            }
             SettingsDialog.DataContext = CurrentSettings;
             this.SensorsDataTable.ItemsSource = this.SensorsData;
         }
