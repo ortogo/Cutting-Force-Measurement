@@ -24,7 +24,7 @@ namespace CuttingForceMeasurement
         const string SerialsEmptyString = "(отсутствуют)";
 
         private bool isDemoMode = false;
-        private Regex doubleRegex = new Regex(@"^-?(\d+),?(\d*)$");
+        private Regex doubleRegex = new Regex(@"^-?(\d*)\.?(\d*)$");
         private Regex numberRegex = new Regex(@"\d");
         private SensorsData CurrentSensorsData;
         public Settings CurrentSettings { get; set; }
@@ -382,60 +382,41 @@ namespace CuttingForceMeasurement
                 UpdateSensarsDataTableDialog.IsOpen = true;
             }
         }
-        
+
         private void Double_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox tb = ((TextBox)sender);
-            
-            if (e.Text == "-")
+            // то что сейчас введено
+            string currentInput = tb.Text;
+            // положение каретки
+            int caretIndex = tb.CaretIndex;
+            // текущий символ ввода
+            string inputedSymbol = e.Text;
+            // Замена запятой на точку
+            if (inputedSymbol == ",")
             {
-                if (tb.SelectedText.Length > 0 && tb.SelectedText.IndexOf('-') >= 0)
+                inputedSymbol = ".";
+            }
+            // если есть выбраный текст, то удалить его и изменить положение каретки
+            if (tb.SelectedText.Length > 0)
+            {
+                currentInput = currentInput.Remove(tb.SelectionStart, tb.SelectionLength);
+                if (tb.SelectionStart != caretIndex)
                 {
-                    tb.SelectedText = "";
-                }
-                var pos = tb.CaretIndex;
-                if (((tb.Text.Length == 0) || !tb.Text.StartsWith("-")) && pos == 0)
-                {
-                    if (tb.SelectedText.Length > 0)
-                    {
-                        tb.SelectedText = "";
-                    }
-                    tb.Text = tb.Text.Insert(pos, e.Text);
-                    tb.CaretIndex = pos + 1;
+                    tb.CaretIndex = tb.SelectionStart;
+                    caretIndex = tb.SelectionStart;
                 }
             }
-            
-            if (e.Text == "." || e.Text == ",")
+            // вставляем введенный символ в строку
+            currentInput = currentInput.Insert(caretIndex, inputedSymbol);
+            // проверка на валидность ввода, замена текста в поле, установка каретки на нужную позицию
+            if (doubleRegex.IsMatch(currentInput))
             {
-                if (tb.SelectedText.Length > 0 && (tb.SelectedText.IndexOf('.') >= 0 || tb.SelectedText.IndexOf(',') >= 0))
-                {
-                    tb.SelectedText = "";
-                }
-                if ((tb.Text.IndexOf(".") < 0))
-                {
-                    if (tb.SelectedText.Length > 0)
-                    {
-                        tb.SelectedText = "";
-                    }
-                    var pos = tb.CaretIndex;
-                    tb.Text = tb.Text.Insert(pos, ".");
-                    tb.CaretIndex = pos + 1;
-                }
+                
+                tb.Text = currentInput;
+                tb.CaretIndex = caretIndex+1;
             }
-            if (numberRegex.IsMatch(e.Text))
-            {
-                if (tb.SelectedText.Length > 0)
-                {
-                    tb.SelectedText = "";
-                }
-                var pos = tb.CaretIndex;
-                if (!(pos == 0 && tb.Text.StartsWith("-")))
-                {
-                    tb.Text = tb.Text.Insert(pos, e.Text);
-                    tb.CaretIndex = pos + 1;
-                }
-            }
-
+            // прерываем ввод, так как текст в поле изменяется вручную
             e.Handled = true;
         }
 
