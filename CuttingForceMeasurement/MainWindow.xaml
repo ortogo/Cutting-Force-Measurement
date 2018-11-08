@@ -208,14 +208,14 @@
                                 мс
                                 </TextBlock>
                             </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Acceleration}">
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Acceleration}">
                                 <TextBlock  TextAlignment="Center">
                                 Ускорение,
                             <LineBreak />
                                 м/с<Run BaselineAlignment="Superscript" FontSize="8">2</Run>
                                 </TextBlock>
                             </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Force}">
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Force}">
                                 <TextBlock  TextAlignment="Center">
                                 Усилие,
                             <LineBreak />
@@ -223,7 +223,7 @@
                                 </TextBlock>
 
                             </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Voltage}">
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Voltage}">
                                 <TextBlock  TextAlignment="Center">
                                 Напряжение,
                             <LineBreak />
@@ -231,14 +231,14 @@
                                 </TextBlock>
 
                             </GridViewColumn>
-                            <GridViewColumn  Width="120" DisplayMemberBinding="{Binding Path=Amperage}">
+                            <GridViewColumn  Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Amperage}">
                                 <TextBlock TextAlignment="Center">
                                 Ток,
                             <LineBreak />
                                  А
                                 </TextBlock>
                             </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Rpm}">
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Rpm}">
                                 <TextBlock  TextAlignment="Center">
                                 Обороты,
                             <LineBreak />
@@ -409,6 +409,43 @@
                 
             </materialDesign:DialogHost.DialogContent>
             
+        </materialDesign:DialogHost>
+        
+        <!-- Диалог обновить ли данные в таблице -->
+        <materialDesign:DialogHost
+            x:Name="UpdateSensarsDataTableDialog"
+            Grid.Row="3"
+            DialogClosing="UpdateSensarsDataTableDialog_DialogClosing"
+            HorizontalAlignment="Center" 
+            VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="16">
+                    <TextBlock>Обновить данные в таблице?</TextBlock>
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
+                        <Button 
+                                Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsDefault="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand"
+                                
+                                >
+                            <Button.CommandParameter>
+                                <system:Boolean>True</system:Boolean>
+                            </Button.CommandParameter>
+                            Обновить
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean>False</system:Boolean>
+                            </Button.CommandParameter>
+                            Нет
+                        </Button>
+                    </StackPanel>
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
     </Grid>
     

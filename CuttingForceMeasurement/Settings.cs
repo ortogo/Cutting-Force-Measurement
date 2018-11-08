@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace CuttingForceMeasurement
 {
-    public class Settings
+    public class Settings: ICloneable
     {
         private const string FILENAME = "settings.json";
         private const string LOCALAPPDIR = "CuttingForceMeasurement";
@@ -104,6 +104,20 @@ namespace CuttingForceMeasurement
             AmperageCoef = 1;
             RpmCoef = 1;
             DemoMode = false;
+        }
+
+        public object Clone()
+        {
+            return new Settings {
+                BaudRate = this.BaudRate,
+            DataBits = this.DataBits,
+            AccelerationCoef = this.AccelerationCoef,
+            ForceCoef = this.ForceCoef,
+            VoltageCoef = this.VoltageCoef,
+            AmperageCoef = this.AmperageCoef,
+            RpmCoef = this.RpmCoef,
+            DemoMode = this.DemoMode,
+        };
         }
     }
 }

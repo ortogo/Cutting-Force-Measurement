@@ -28,7 +28,7 @@ namespace CuttingForceMeasurement
         private Regex numberRegex = new Regex(@"\d");
         private SensorsData CurrentSensorsData;
         public Settings CurrentSettings { get; set; }
-
+        public Settings PrevioslySettings { get; set; }
         public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
 
         public MainWindow()
@@ -370,23 +370,36 @@ namespace CuttingForceMeasurement
 
         private void Settings_Click(object sender, RoutedEventArgs e)
         {
+            PrevioslySettings = (Settings)CurrentSettings.Clone();
             SettingsDialog.IsOpen = true;
         }
 
         private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             CurrentSettings.Save();
+            if (this.SensorsData.Count() > 0)
+            {
+                UpdateSensarsDataTableDialog.IsOpen = true;
+            }
         }
         
         private void Double_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox tb = ((TextBox)sender);
+            
             if (e.Text == "-")
             {
+                if (tb.SelectedText.Length > 0 && tb.SelectedText.IndexOf('-') >= 0)
+                {
+                    tb.SelectedText = "";
+                }
                 var pos = tb.CaretIndex;
                 if (((tb.Text.Length == 0) || !tb.Text.StartsWith("-")) && pos == 0)
                 {
-                   
+                    if (tb.SelectedText.Length > 0)
+                    {
+                        tb.SelectedText = "";
+                    }
                     tb.Text = tb.Text.Insert(pos, e.Text);
                     tb.CaretIndex = pos + 1;
                 }
@@ -394,8 +407,16 @@ namespace CuttingForceMeasurement
             
             if (e.Text == "." || e.Text == ",")
             {
+                if (tb.SelectedText.Length > 0 && (tb.SelectedText.IndexOf('.') >= 0 || tb.SelectedText.IndexOf(',') >= 0))
+                {
+                    tb.SelectedText = "";
+                }
                 if ((tb.Text.IndexOf(".") < 0))
                 {
+                    if (tb.SelectedText.Length > 0)
+                    {
+                        tb.SelectedText = "";
+                    }
                     var pos = tb.CaretIndex;
                     tb.Text = tb.Text.Insert(pos, ".");
                     tb.CaretIndex = pos + 1;
@@ -403,6 +424,10 @@ namespace CuttingForceMeasurement
             }
             if (numberRegex.IsMatch(e.Text))
             {
+                if (tb.SelectedText.Length > 0)
+                {
+                    tb.SelectedText = "";
+                }
                 var pos = tb.CaretIndex;
                 if (!(pos == 0 && tb.Text.StartsWith("-")))
                 {
@@ -425,6 +450,32 @@ namespace CuttingForceMeasurement
             }
 
             e.Handled = true;
+        }
+
+        private void UpdateSensorsDataTable()
+        {
+            if (this.SensorsData.Count() <= 0)
+            {
+                return;
+            }
+            for(int i = 0; i < SensorsData.Count(); i++)
+            {
+                var sdi = SensorsData[i];
+                sdi.Acceleration *= CurrentSettings.AccelerationCoef / PrevioslySettings.AccelerationCoef;
+                sdi.Force *= CurrentSettings.ForceCoef / PrevioslySettings.ForceCoef;
+                sdi.Voltage *= CurrentSettings.VoltageCoef / PrevioslySettings.VoltageCoef;
+                sdi.Amperage *= CurrentSettings.AmperageCoef / PrevioslySettings.AmperageCoef;
+                sdi.Rpm *= CurrentSettings.RpmCoef / PrevioslySettings.RpmCoef;
+                // быдлокод
+                SensorsData.RemoveAt(i);
+                SensorsData.Insert(i, sdi);
+            }
+        }
+
+        private void UpdateSensarsDataTableDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (!Equals(eventArgs.Parameter, true)) return;
+            UpdateSensorsDataTable();
         }
     }
 }
