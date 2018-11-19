@@ -133,6 +133,7 @@ namespace CuttingForceMeasurement
 
         private void MessageDialog_ClosingConnectSensors(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
         {
+            LoadSerialPorts();
             this.MessageDialog.DialogClosing -= MessageDialog_ClosingConnectSensors;
             MessageDialogButtonOk.Content = "Хорошо";
         }
@@ -457,6 +458,11 @@ namespace CuttingForceMeasurement
         {
             if (!Equals(eventArgs.Parameter, true)) return;
             UpdateSensorsDataTable();
+        }
+
+        private void RefreshCOM_Click(object sender, RoutedEventArgs e)
+        {
+            LoadSerialPorts();
         }
     }
 }

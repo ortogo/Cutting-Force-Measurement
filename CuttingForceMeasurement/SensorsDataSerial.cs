@@ -23,7 +23,11 @@ namespace CuttingForceMeasurement
             Sensors.PortName = SerialPortName;
             Sensors.BaudRate = main.CurrentSettings.BaudRate;
             Sensors.DataBits = main.CurrentSettings.DataBits;
-
+            Sensors.Parity = Parity.None;
+            Sensors.StopBits = StopBits.One;
+            Sensors.Handshake = Handshake.None;
+            Sensors.Encoding = Encoding.Default;
+            Sensors.ReadTimeout = 10000;
             try
             {
                 Sensors.Open();
@@ -43,7 +47,7 @@ namespace CuttingForceMeasurement
                    throw new Exception("Пустая строка");
                 }
                 // В системе используется русский разделитель целой и дробной части
-                input.Replace('.', ',');
+                // input.Replace('.', ',');
 
                 string[] sdiParamsString = input.Split('\t');
                 double[] sdiParams = new double[SDI_PARAMS_COUNT];

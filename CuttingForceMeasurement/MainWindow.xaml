@@ -136,6 +136,17 @@
                 >
                 <ComboBoxItem IsSelected="True">Загрузка</ComboBoxItem>
             </ComboBox>
+            <Button x:Name="RefreshCOM"
+                    Padding="0"
+                    Style="{StaticResource MaterialDesignFlatButton}"
+                    Click="RefreshCOM_Click">
+                <materialDesign:PackIcon
+                Width="32" Height="32"
+                
+                VerticalAlignment="Center"
+                Kind="Reload"
+                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+            </Button>
             
         </StackPanel>
         <StackPanel
