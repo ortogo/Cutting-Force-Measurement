@@ -12,8 +12,7 @@ namespace CuttingForceMeasurement
     {
         private const string FILENAME = "settings.json";
         private const string LOCALAPPDIR = "CuttingForceMeasurement";
-
-        string PathLocal = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+        readonly string PathLocal = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
         // Скорсть передачи по сериальному порту
         public int BaudRate { get; set; }
