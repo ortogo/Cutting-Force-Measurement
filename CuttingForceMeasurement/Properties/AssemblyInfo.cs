@@ -8,11 +8,11 @@ using System.Windows;
 // набора атрибутов. Измените значения этих атрибутов, чтобы изменить сведения,
 // связанные со сборкой.
 [assembly: AssemblyTitle("CuttingForceMeasurement")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Приложение для проведения измерений")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("CuttingForceMeasurement")]
-[assembly: AssemblyCopyright("Copyright ©  2018")]
+[assembly: AssemblyCopyright("©  2018 ortogo")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
