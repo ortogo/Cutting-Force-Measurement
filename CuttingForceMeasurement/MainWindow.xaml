@@ -86,48 +86,49 @@
             <materialDesign:PackIcon
                 Width="32" Height="32"
                 Margin="10 0 0 0"
-                VerticalAlignment="Center"
+                VerticalAlignment="Bottom"
                 Kind="AccountCircle"
                 Foreground="Gray"/>
 
             <TextBlock
                 FontSize="16"
                 Foreground="Black"
-                VerticalAlignment="Center"
-                Margin="10 0 0 0"
+                VerticalAlignment="Bottom"
+                Margin="10 0 0 5"
                 >
                 Выполнил
             </TextBlock>
             <TextBox
                 x:Name="GroupName"
-                Width="124" Height="32"
+                Width="124"
                 Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignTextBox}"
+                materialDesign:HintAssist.Hint="студент группы"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 FontSize="16"
                 Foreground="Black"
-                materialDesign:HintAssist.Hint="студент группы"
                 />
             <TextBox
                 x:Name="StudentName"
-                Width="124" Height="32"
-                Style="{DynamicResource MaterialDesignTextBox}"
+                Width="124"
+                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                 Margin="10 0 0 0"
                 FontSize="16"
                 Foreground="Black"
-                materialDesign:HintAssist.Hint="Волков В"
+                materialDesign:HintAssist.Hint="Фамилия Имя"
                 />
 
             <materialDesign:PackIcon
                 Width="32" Height="32"
                 Margin="10 0 0 0"
-                VerticalAlignment="Center"
+                VerticalAlignment="Bottom"
                 Kind="Bug"
                 Foreground="Gray"/>
 
             <ComboBox
                 x:Name="ComPort"
                 Style="{StaticResource MaterialDesignComboBox}"
-                Height="32" Width="128"
+                Width="128"
+                VerticalAlignment="Bottom"
                 Margin="10 0 0 0"
                 FontSize="16"
                 materialDesign:HintAssist.Hint="COM Port"
@@ -138,12 +139,12 @@
             </ComboBox>
             <Button x:Name="RefreshCOM"
                     Padding="0"
+                    Margin="10 0 0 0"
+                    VerticalAlignment="Bottom"
                     Style="{StaticResource MaterialDesignFlatButton}"
                     Click="RefreshCOM_Click">
                 <materialDesign:PackIcon
                 Width="32" Height="32"
-                
-                VerticalAlignment="Center"
                 Kind="Reload"
                 Foreground="{DynamicResource PrimaryHueMidBrush}"/>
             </Button>
@@ -163,22 +164,13 @@
                 Записать
             </Button>
             <Button
-                x:Name="Save"
-                Width="124"
-                Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedButton}"
-                Click="Save_Click">
-                Сохранить
-            </Button>
-            <Button
                 x:Name="ExportExcel"
-                Width="124"
                 Margin="10 0 0 0"
                 Style="{DynamicResource MaterialDesignRaisedButton}"
                 Click="ExportExcel_Click">
                 <StackPanel Orientation="Horizontal">
                     <TextBlock
-                        VerticalAlignment="Center">Экспорт</TextBlock>
+                        VerticalAlignment="Center">Сохранить</TextBlock>
                     <materialDesign:PackIcon
                         Kind="FileExcel" 
                         Height="24" Width="24"
@@ -343,7 +335,7 @@
                         Настройки
                     </TextBlock>
                     <ScrollViewer
-                        VerticalScrollBarVisibility="Hidden"
+                        VerticalScrollBarVisibility="Auto"
                         
                         Height="320">
                     <StackPanel>
@@ -413,7 +405,19 @@
                                 Margin="0 10 10 0"
                                 HorizontalAlignment="Right"
                                 Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean>False</system:Boolean>
+                            </Button.CommandParameter>
                             Сохранить
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:Boolean>False</system:Boolean>
+                            </Button.CommandParameter>
+                            Закрыть
                         </Button>
                     </StackPanel>
                 </StackPanel>
