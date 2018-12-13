@@ -19,15 +19,17 @@ namespace CuttingForceMeasurement
         public SensorsDataSerial(MainWindow main, string serial) : base(main)
         {
             SerialPortName = serial;
-            Sensors = new SerialPort();
-            Sensors.PortName = SerialPortName;
-            Sensors.BaudRate = main.CurrentSettings.BaudRate;
-            Sensors.DataBits = main.CurrentSettings.DataBits;
-            Sensors.Parity = Parity.None;
-            Sensors.StopBits = StopBits.One;
-            Sensors.Handshake = Handshake.None;
-            Sensors.Encoding = Encoding.Default;
-            Sensors.ReadTimeout = 10000;
+            Sensors = new SerialPort
+            {
+                PortName = SerialPortName,
+                BaudRate = main.CurrentSettings.BaudRate,
+                DataBits = main.CurrentSettings.DataBits,
+                Parity = Parity.None,
+                StopBits = StopBits.One,
+                Handshake = Handshake.None,
+                Encoding = Encoding.Default,
+                ReadTimeout = 10000
+            };
             try
             {
                 Sensors.Open();
@@ -39,17 +41,19 @@ namespace CuttingForceMeasurement
 
         protected override void Next(int count)
         {
+            string[] separatingChars = { " ", "\t"};
             try
             {
                 string input = Sensors.ReadLine();
+                input = input.Trim();
                 if (string.IsNullOrEmpty(input))
                 {
                    throw new Exception("Пустая строка");
                 }
                 // В системе используется русский разделитель целой и дробной части
-                // input.Replace('.', ',');
+                input = input.Replace('.', ',');
 
-                string[] sdiParamsString = input.Split('\t');
+                string[] sdiParamsString = input.Split(separatingChars, StringSplitOptions.RemoveEmptyEntries);
                 double[] sdiParams = new double[SDI_PARAMS_COUNT];
                 for (int i = 0; i < SDI_PARAMS_COUNT; i ++)
                 {
