@@ -254,8 +254,10 @@ namespace CuttingForceMeasurement
             public TestSerialWriter()
             {
                 Rand = new Random();
-                Serial = new SerialPort();
-                Serial.PortName = "COM1";
+                Serial = new SerialPort
+                {
+                    PortName = "COM1"
+                };
                 Serial.Open();
             }
 
@@ -268,13 +270,15 @@ namespace CuttingForceMeasurement
             {
                 while (true)
                 {
-                    SensorDataItem se = new SensorDataItem();
-                    se.Time = count;
-                    se.Acceleration = Rand.Next(0, 100);
-                    se.Force = Rand.Next(0, 100);
-                    se.Voltage = Rand.Next(200, 220);
-                    se.Amperage = 3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5;
-                    se.Rpm = Rand.Next(2800, 2975);
+                    SensorDataItem se = new SensorDataItem
+                    {
+                        Time = count,
+                        Acceleration = Rand.Next(0, 100),
+                        Force = Rand.Next(0, 100),
+                        Voltage = Rand.Next(200, 220),
+                        Amperage = 3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5,
+                        Rpm = Rand.Next(2800, 2975)
+                    };
                     Serial.WriteLine(se.ToString());
                     count++;
                     Task.Delay(50).Wait();
@@ -289,9 +293,11 @@ namespace CuttingForceMeasurement
                 ShowMessage("Сначала запишите данные датчиков");
                 return;
             }
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Текст (*.txt)|*.txt";
-            saveFileDialog.DefaultExt = "txt";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Текст (*.txt)|*.txt",
+                DefaultExt = "txt"
+            };
             var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             saveFileDialog.InitialDirectory = desctopPath;
             saveFileDialog.FileName = $"{GroupName.Text} {StudentName.Text}.txt";
@@ -327,9 +333,11 @@ namespace CuttingForceMeasurement
                 ShowMessage("Сначала запишите данные датчиков");
                 return;
             }
-            SaveFileDialog saveFileDialog = new SaveFileDialog();
-            saveFileDialog.Filter = "Книга Excel (*.xlsx)|*.xlsx";
-            saveFileDialog.DefaultExt = "xlsx";
+            SaveFileDialog saveFileDialog = new SaveFileDialog
+            {
+                Filter = "Книга Excel (*.xlsx)|*.xlsx",
+                DefaultExt = "xlsx"
+            };
             var desctopPath = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
             saveFileDialog.InitialDirectory = desctopPath;
             saveFileDialog.FileName = $"{GroupName.Text} {StudentName.Text}.xlsx";
