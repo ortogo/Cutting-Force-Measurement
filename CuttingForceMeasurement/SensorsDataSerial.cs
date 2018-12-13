@@ -41,6 +41,8 @@ namespace CuttingForceMeasurement
 
         protected override void Next(int count)
         {
+            if (!IsReading) return;
+
             string[] separatingChars = { " ", "\t"};
             try
             {
@@ -55,9 +57,20 @@ namespace CuttingForceMeasurement
 
                 string[] sdiParamsString = input.Split(separatingChars, StringSplitOptions.RemoveEmptyEntries);
                 double[] sdiParams = new double[SDI_PARAMS_COUNT];
+
+                bool isAllParamsNull = true;
+                
                 for (int i = 0; i < SDI_PARAMS_COUNT; i ++)
                 {
                     sdiParams[i] = Double.Parse(sdiParamsString[i]);
+                    if (i != 0 && sdiParams[i] != 0)
+                    {
+                        isAllParamsNull = false;
+                    }
+                }
+                if (isAllParamsNull)
+                {
+                    return;
                 }
                 if (SensorsTime == null)
                 {
