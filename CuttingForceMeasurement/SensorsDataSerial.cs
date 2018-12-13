@@ -46,6 +46,8 @@ namespace CuttingForceMeasurement
             string[] separatingChars = { " ", "\t"};
             try
             {
+                if (!Sensors.IsOpen) return;
+
                 string input = Sensors.ReadLine();
                 input = input.Trim();
                 if (string.IsNullOrEmpty(input))
