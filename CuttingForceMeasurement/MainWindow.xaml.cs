@@ -385,6 +385,7 @@ namespace CuttingForceMeasurement
 
         private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
+            if (!Equals(eventArgs.Parameter, true)) return;
             CurrentSettings.Save();
             if (this.SensorsData.Count() > 0)
             {
