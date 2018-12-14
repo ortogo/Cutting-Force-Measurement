@@ -27,6 +27,7 @@ namespace CuttingForceMeasurement
         private Regex doubleRegex = new Regex(@"^-?(\d*)\.?(\d*)$");
         private Regex numberRegex = new Regex(@"\d");
         private SensorsData CurrentSensorsData;
+        private bool isSaved = false;
         public Settings CurrentSettings { get; set; }
         public Settings PrevioslySettings { get; set; }
         public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
@@ -83,7 +84,10 @@ namespace CuttingForceMeasurement
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
-            ExitDialog.IsOpen = true;
+            if (!isSaved)
+            {
+                ExitDialog.IsOpen = true;
+            }
         }
 
         private void NavigationBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -140,6 +144,7 @@ namespace CuttingForceMeasurement
 
         private void Record_Click(object sender, RoutedEventArgs e)
         {
+            isSaved = false;
             if (!isDemoMode)
             {
                 if (GroupName.Text.Length == 0)
@@ -227,9 +232,10 @@ namespace CuttingForceMeasurement
 
         private void ResetAll()
         {
-            this.TimeRecording.Text = "готов";
-            this.SensorsData.Clear();
-            this.StopReading();
+            TimeRecording.Text = "готов";
+            SensorsData.Clear();
+            StopReading();
+            isSaved = true;
         }
 
         private void StopReading()
@@ -306,6 +312,7 @@ namespace CuttingForceMeasurement
                 try
                 {
                     File.WriteAllText(saveFileDialog.FileName, SerializeToText());
+                    isSaved = true;
                     ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
                 }
                 catch (Exception ex)
@@ -367,6 +374,7 @@ namespace CuttingForceMeasurement
                     try
                     {
                         p.SaveAs(new FileInfo(saveFileDialog.FileName));
+                        isSaved = true;
                         ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
                     }
                     catch (Exception ex)
@@ -474,6 +482,7 @@ namespace CuttingForceMeasurement
         private void UpdateSensarsDataTableDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
             if (!Equals(eventArgs.Parameter, true)) return;
+            isSaved = false;
             UpdateSensorsDataTable();
         }
 

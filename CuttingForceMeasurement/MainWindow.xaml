@@ -226,7 +226,7 @@
                                 </TextBlock>
 
                             </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Voltage}">
+                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0}, Path=Voltage}">
                                 <TextBlock  TextAlignment="Center">
                                 Напряжение,
                             <LineBreak />
