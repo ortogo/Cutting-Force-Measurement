@@ -251,47 +251,6 @@ namespace CuttingForceMeasurement
             }
         }
 
-        class TestSerialWriter
-        {
-            private Random Rand;
-            private SerialPort Serial;
-            private int count = 0;
-
-            public TestSerialWriter()
-            {
-                Rand = new Random();
-                Serial = new SerialPort
-                {
-                    PortName = "COM1"
-                };
-                Serial.Open();
-            }
-
-            public void Stop()
-            {
-                Serial.Close();
-            }
-
-            public void Write()
-            {
-                while (true)
-                {
-                    SensorDataItem se = new SensorDataItem
-                    {
-                        Time = count,
-                        Acceleration = Rand.Next(0, 100),
-                        Force = Rand.Next(0, 100),
-                        Voltage = Rand.Next(200, 220),
-                        Amperage = 3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5,
-                        Rpm = Rand.Next(2800, 2975)
-                    };
-                    Serial.WriteLine(se.ToString());
-                    count++;
-                    Task.Delay(50).Wait();
-                }
-            }
-        }
-
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (SensorsData.Count() <= 0)
