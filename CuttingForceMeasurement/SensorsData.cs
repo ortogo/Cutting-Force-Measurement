@@ -6,9 +6,18 @@ using System.Threading.Tasks;
 
 namespace CuttingForceMeasurement
 {
+    /// <summary>
+    /// Класс для управления потоком чтения данных
+    /// </summary>
     public abstract class SensorsData
     {
+        /// <summary>
+        /// Состояние чтения, читает или нет
+        /// </summary>
         public bool IsReading { get; set; }
+        /// <summary>
+        /// Текущее окно, которое выводит промежуточный результат чтения
+        /// </summary>
         protected MainWindow Main { get; set; }
 
         public SensorsData(MainWindow main)
@@ -25,20 +34,24 @@ namespace CuttingForceMeasurement
 
         public void Read()
         {
-            int count = 0;
             IsReading = true;
             while(IsReading)
             {
-                Next(count);
-                count++;
+                Next();
             }
         }
 
+        /// <summary>
+        /// Событие принудительной остановки чтения
+        /// </summary>
         public virtual void OnStop()
         {
 
         }
 
-        protected abstract void Next(int count);
+        /// <summary>
+        /// Исолпользуется для выполнения операции чтения
+        /// </summary>
+        protected abstract void Next();
     }
 }

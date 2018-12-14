@@ -8,56 +8,102 @@ using Newtonsoft.Json;
 
 namespace CuttingForceMeasurement
 {
-    public class Settings: ICloneable
+    /// <summary>
+    /// Хранит настройки пользователя. Возможно клонирование.
+    /// Настройки хранятся в директории данных приложений пользователя <c>AppData/Local/CuttingForceMeasurement</c>
+    /// Формат хранения JSON
+    /// </summary>
+    /// <remarks>Включает в себя методы для сохранения и чтения настроек</remarks>
+    public class Settings : ICloneable
     {
+        /// <summary>
+        /// Название файла настроек
+        /// </summary>
         private const string FILENAME = "settings.json";
+        /// <summary>
+        /// Имя директории настроек
+        /// </summary>
         private const string LOCALAPPDIR = "CuttingForceMeasurement";
+        /// <summary>
+        /// Полный путь к директории <c>Local</c>
+        /// </summary>
         readonly string PathLocal = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
-        // Скорсть передачи по сериальному порту
+        /// <summary>
+        /// Скорсть передачи по сериальному порту
+        /// </summary>
         public int BaudRate { get; set; }
-        // Количество бит в передаваемом байте
+        /// <summary>
+        /// Количество бит в передаваемом байте
+        /// </summary>
         public int DataBits { get; set; }
-        // Ускорение м/с^2
+        /// <summary>
+        /// Ускорение м/с^2
+        /// </summary>
         public double AccelerationCoef { get; set; }
-        // Усилие кН
+        /// <summary>
+        /// Усилие кН
+        /// </summary>
         public double ForceCoef { get; set; }
-        // Напряжение, В
+        /// <summary>
+        /// Напряжение, В
+        /// </summary>
         public double VoltageCoef { get; set; }
-        // Ток, А
+        /// <summary>
+        /// Ток, А
+        /// </summary>
         public double AmperageCoef { get; set; }
-        // Частота оборотов, об/микросек
+        /// <summary>
+        /// Частота оборотов, об/микросек
+        /// </summary>
         public double RpmCoef { get; set; }
-        // Демо режим
+        /// <summary>
+        /// Демо режим
+        /// </summary>
         public bool DemoMode { get; set; }
 
+        /// <summary>
+        /// Сохраняет настройки
+        /// </summary>
         public void Save()
         {
             string serialized = JsonConvert.SerializeObject(this);
-            
+
             File.WriteAllText(GetFilePath(), serialized);
         }
 
+        /// <summary>
+        /// Возыращает путь к файлу настроек
+        /// </summary>
+        /// <returns></returns>
         private string GetFilePath()
         {
             string filePath = $"{PathLocal}\\{LOCALAPPDIR}\\{FILENAME}";
             return filePath;
         }
 
+        /// <summary>
+        /// Возвращает путь к директории хранения настроек
+        /// </summary>
+        /// <returns></returns>
         private string GetDirectoryPath()
         {
-            
+
             string directoryPath = $"{PathLocal}\\{LOCALAPPDIR}";
             return directoryPath;
         }
 
+        /// <summary>
+        /// Читает настройки из хранилища. В случае отсутствия файла настроек, он создается
+        /// </summary>
         public void Load()
         {
             var fi = new FileInfo(GetFilePath());
             if (!fi.Exists)
             {
                 DefaultSave();
-            } else
+            }
+            else
             {
                 string filePath = GetFilePath();
                 string serialized = File.ReadAllText(filePath);
@@ -80,6 +126,9 @@ namespace CuttingForceMeasurement
 
         }
 
+        /// <summary>
+        /// Создает новый файл настроек
+        /// </summary>
         private void DefaultSave()
         {
             var fi = new FileInfo(GetFilePath());
@@ -93,6 +142,9 @@ namespace CuttingForceMeasurement
             Save();
         }
 
+        /// <summary>
+        /// Настройки по умолчанию
+        /// </summary>
         private void DefaultInit()
         {
             BaudRate = 9600;
@@ -105,18 +157,23 @@ namespace CuttingForceMeasurement
             DemoMode = false;
         }
 
+        /// <summary>
+        /// Копирование объекта настроек
+        /// </summary>
+        /// <returns>копия настроек</returns>
         public object Clone()
         {
-            return new Settings {
+            return new Settings
+            {
                 BaudRate = this.BaudRate,
-            DataBits = this.DataBits,
-            AccelerationCoef = this.AccelerationCoef,
-            ForceCoef = this.ForceCoef,
-            VoltageCoef = this.VoltageCoef,
-            AmperageCoef = this.AmperageCoef,
-            RpmCoef = this.RpmCoef,
-            DemoMode = this.DemoMode,
-        };
+                DataBits = this.DataBits,
+                AccelerationCoef = this.AccelerationCoef,
+                ForceCoef = this.ForceCoef,
+                VoltageCoef = this.VoltageCoef,
+                AmperageCoef = this.AmperageCoef,
+                RpmCoef = this.RpmCoef,
+                DemoMode = this.DemoMode,
+            };
         }
     }
 }

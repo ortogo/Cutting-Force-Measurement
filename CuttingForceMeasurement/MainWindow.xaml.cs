@@ -24,14 +24,21 @@ namespace CuttingForceMeasurement
         const string SerialsEmptyString = "(отсутствуют)";
 
         private bool isDemoMode = false;
+        private bool isSaved = false;
         private Regex doubleRegex = new Regex(@"^-?(\d*)\.?(\d*)$");
         private Regex numberRegex = new Regex(@"\d");
         private SensorsData CurrentSensorsData;
-        private bool isSaved = false;
+        private string oldGroupName = "";
+        private string oldStudentName = "";
+
         public Settings CurrentSettings { get; set; }
         public Settings PrevioslySettings { get; set; }
         public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
 
+        /// <summary>
+        /// Здесь проводится загрузка активных COM портов, загрузка настроек приложения, 
+        /// а так же устанавливает свойство <c>DataContext</c> для некоторых диалогов
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
@@ -47,6 +54,9 @@ namespace CuttingForceMeasurement
             this.SensorsDataTable.ItemsSource = this.SensorsData;
         }
 
+        /// <summary>
+        /// Чтение списка COM портов, выполняет изменение списка портов в представлении приложения
+        /// </summary>
         private void LoadSerialPorts()
         {
             // Loading state
@@ -82,6 +92,11 @@ namespace CuttingForceMeasurement
 
         }
 
+        /// <summary>
+        /// Обработка события выхода из приложения. Если результаты измерения <b>не сохранены</b>, то показывается диалог
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             if (!isSaved)
@@ -90,6 +105,11 @@ namespace CuttingForceMeasurement
             }
         }
 
+        /// <summary>
+        /// Используется для ручного управления перемещением окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void NavigationBar_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             this.DragMove();
@@ -106,8 +126,6 @@ namespace CuttingForceMeasurement
             Close();
         }
 
-        private string oldGroupName = "";
-        private string oldStudentName = "";
 
         private void OnDemoMode(object sender, RoutedEventArgs e)
         {
@@ -142,6 +160,11 @@ namespace CuttingForceMeasurement
             MessageDialogButtonOk.Content = "Хорошо";
         }
 
+        /// <summary>
+        /// Останавливает и запускает запись данных. Выполняет проверку полей на наличие названия группы и имени студента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Record_Click(object sender, RoutedEventArgs e)
         {
             isSaved = false;
@@ -185,10 +208,6 @@ namespace CuttingForceMeasurement
                 }
                 else
                 {
-                    /* var tsw = new TestSerialWriter();
-                    Thread ts = new Thread(tsw.Write);
-                    ts.Start();
-                    */
                     CurrentSensorsData = new SensorsDataSerial(this, ComPort.SelectedValue.ToString());
                 }
                 Thread t = new Thread(CurrentSensorsData.Read);
@@ -197,6 +216,10 @@ namespace CuttingForceMeasurement
 
         }
 
+        /// <summary>
+        /// Обновляет результаты измерения из внешенго потока
+        /// </summary>
+        /// <param name="sensorDataItem">новые данные от датчиков</param>
         public void UpdateSensorsData(SensorDataItem sensorDataItem)
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
@@ -206,6 +229,10 @@ namespace CuttingForceMeasurement
 
         }
 
+        /// <summary>
+        /// Выводит сообщение об ошибки при чтении данных датчиков. Останавлиает запись.
+        /// </summary>
+        /// <param name="e">ошибка</param>
         public void TriggerErrorReading(Exception e)
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
@@ -216,6 +243,10 @@ namespace CuttingForceMeasurement
 
         }
 
+        /// <summary>
+        /// Обновление времени записи на представлении
+        /// </summary>
+        /// <param name="time">текущее время записи</param>
         public void SetTimeReading(int time)
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
@@ -230,7 +261,10 @@ namespace CuttingForceMeasurement
             ResetAll();
         }
 
-        private void ResetAll()
+        /// <summary>
+        /// Очистка результатов записи на представлении
+        /// </summary>
+        public void ResetAll()
         {
             TimeRecording.Text = "готов";
             SensorsData.Clear();
@@ -368,6 +402,11 @@ namespace CuttingForceMeasurement
             }
         }
 
+        /// <summary>
+        /// Ограничение ввода. Разрешает вводить только дробные числа с точкой
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Double_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox tb = ((TextBox)sender);
@@ -405,6 +444,11 @@ namespace CuttingForceMeasurement
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Ограничение ввода. Разрешает вводить только числа
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Number_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
             TextBox tb = ((TextBox)sender);
@@ -418,6 +462,9 @@ namespace CuttingForceMeasurement
             e.Handled = true;
         }
 
+        /// <summary>
+        /// Выполняет обновление результатов записи в случае измения коэффициентов в настройках
+        /// </summary>
         private void UpdateSensorsDataTable()
         {
             if (this.SensorsData.Count() <= 0)

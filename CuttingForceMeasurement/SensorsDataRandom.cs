@@ -6,16 +6,20 @@ using System.Threading.Tasks;
 
 namespace CuttingForceMeasurement
 {
+    /// <summary>
+    /// Генерирует псевдослучайные данные датчиков. Используется для демоснстрации и тестирования поведения представления
+    /// </summary>
     public class SensorsDataRandom : SensorsData
     {
         private Random Rand;
+        private int count = 0;
 
         public SensorsDataRandom(MainWindow main) : base(main)
         {
             Rand = new Random();
         }
 
-        protected override void Next(int count)
+        protected override void Next()
         {
             SensorDataItem se = new SensorDataItem
             {
@@ -27,6 +31,7 @@ namespace CuttingForceMeasurement
                 Rpm = Rand.Next(2800, 2975) * Main.CurrentSettings.RpmCoef
             };
             Main.UpdateSensorsData(se);
+            count++;
             Main.SetTimeReading(count);
             Task.Delay(100).Wait();
         }

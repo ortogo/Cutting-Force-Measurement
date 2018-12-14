@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace CuttingForceMeasurement
 {
+    /// <summary>
+    /// Реализует интерфейс для чтения данных <c>SensorsData</c>
+    /// Читает данные от аналоговых датчиков
+    /// </summary>
     public class SensorsDataSerial : SensorsData
     {
         const int SDI_PARAMS_COUNT = 6;
@@ -39,7 +43,7 @@ namespace CuttingForceMeasurement
             }
         }
 
-        protected override void Next(int count)
+        protected override void Next()
         {
             if (!IsReading) return;
 
