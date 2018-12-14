@@ -315,6 +315,7 @@
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
+        <!-- Settings Dialog -->
         <materialDesign:DialogHost
             x:Name="SettingsDialog"
             Identifier="SettingsDialog"
@@ -347,7 +348,7 @@
                         <StackPanel Margin="10 0 10 0">
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Скорость"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding BaudRate}"  PreviewTextInput="Number_PreviewTextInput"></TextBox>
+                                    <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding BaudRate}"  PreviewTextInput="Number_PreviewTextInput"></TextBox>
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" Height="48">
                                 <TextBlock  VerticalAlignment="Center" Width="200" Text="Число бит"></TextBlock>
@@ -398,7 +399,7 @@
                         </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
-                <StackPanel Height="48">
+                    <StackPanel Height="48" Orientation="Horizontal" HorizontalAlignment="Right">
                         <Button VerticalAlignment="Center"
                                 Style="{StaticResource MaterialDesignFlatButton}"
                                 IsDefault="True"
@@ -406,7 +407,7 @@
                                 HorizontalAlignment="Right"
                                 Command="materialDesign:DialogHost.CloseDialogCommand">
                             <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
+                                <system:Boolean>True</system:Boolean>
                             </Button.CommandParameter>
                             Сохранить
                         </Button>

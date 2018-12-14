@@ -385,11 +385,19 @@ namespace CuttingForceMeasurement
 
         private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
         {
-            if (!Equals(eventArgs.Parameter, true)) return;
-            CurrentSettings.Save();
-            if (this.SensorsData.Count() > 0)
+            if (Equals(eventArgs.Parameter, false))
             {
-                UpdateSensarsDataTableDialog.IsOpen = true;
+                CurrentSettings = (Settings)PrevioslySettings.Clone();
+                SettingsDialog.DataContext = CurrentSettings;
+
+            }
+            else
+            {
+                CurrentSettings.Save();
+                if (this.SensorsData.Count() > 0)
+                {
+                    UpdateSensarsDataTableDialog.IsOpen = true;
+                }
             }
         }
 
@@ -457,7 +465,7 @@ namespace CuttingForceMeasurement
                 sdi.Voltage *= CurrentSettings.VoltageCoef / PrevioslySettings.VoltageCoef;
                 sdi.Amperage *= CurrentSettings.AmperageCoef / PrevioslySettings.AmperageCoef;
                 sdi.Rpm *= CurrentSettings.RpmCoef / PrevioslySettings.RpmCoef;
-                // быдлокод
+                // Научится динамически изменять значение
                 SensorsData.RemoveAt(i);
                 SensorsData.Insert(i, sdi);
             }
