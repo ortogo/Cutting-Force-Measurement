@@ -24,7 +24,7 @@ namespace CuttingForceMeasurement
         const string SerialsEmptyString = "(отсутствуют)";
 
         private bool isDemoMode = false;
-        private bool isSaved = false;
+        private bool isSaved = true;
         private Regex doubleRegex = new Regex(@"^-?(\d*)\.?(\d*)$");
         private Regex numberRegex = new Regex(@"\d");
         private SensorsData CurrentSensorsData;
@@ -102,6 +102,9 @@ namespace CuttingForceMeasurement
             if (!isSaved)
             {
                 ExitDialog.IsOpen = true;
+            } else
+            {
+                Close();
             }
         }
 
@@ -125,7 +128,18 @@ namespace CuttingForceMeasurement
             if (!Equals(eventArgs.Parameter, true)) return;
             Close();
         }
+        
 
+        private void DialogHost_ExitDialogClosing(object sender, MaterialDesignThemes.Wpf.DialogClosingEventArgs eventArgs)
+        {
+            if (Equals(eventArgs.Parameter, "save"))
+            {
+                ExportToExcel(true);
+            } else if (Equals(eventArgs.Parameter, "close")) {
+                Close();
+            }
+                
+        }
 
         private void OnDemoMode(object sender, RoutedEventArgs e)
         {
@@ -328,6 +342,39 @@ namespace CuttingForceMeasurement
 
         private void ExportExcel_Click(object sender, RoutedEventArgs e)
         {
+            ExportToExcel(false);
+        }
+
+        private void Settings_Click(object sender, RoutedEventArgs e)
+        {
+            PrevioslySettings = (Settings)CurrentSettings.Clone();
+            SettingsDialog.IsOpen = true;
+        }
+
+        private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
+        {
+            if (Equals(eventArgs.Parameter, false))
+            {
+                CurrentSettings = (Settings)PrevioslySettings.Clone();
+                SettingsDialog.DataContext = CurrentSettings;
+
+            }
+            else
+            {
+                CurrentSettings.Save();
+                if (this.SensorsData.Count() > 0)
+                {
+                    UpdateSensarsDataTableDialog.IsOpen = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Сохраняет результаты записи в документ Excel
+        /// </summary>
+        /// <param name="closeOnSaved">закрыть при успешно сохранении</param>
+        public void ExportToExcel(bool closeOnSaved)
+        {
             if (SensorsData.Count() <= 0)
             {
                 ShowMessage("Сначала запишите данные датчиков");
@@ -368,36 +415,18 @@ namespace CuttingForceMeasurement
                     {
                         p.SaveAs(new FileInfo(saveFileDialog.FileName));
                         isSaved = true;
-                        ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                        if (closeOnSaved)
+                        {
+                            Close();
+                        } else
+                        {
+                            ShowMessage($"Файл {saveFileDialog.SafeFileName} успешно сохранен!");
+                        }
                     }
                     catch (Exception ex)
                     {
                         ShowMessage($"Ошибка сохранения {saveFileDialog.SafeFileName}: {ex.Message}");
                     }
-                }
-            }
-        }
-
-        private void Settings_Click(object sender, RoutedEventArgs e)
-        {
-            PrevioslySettings = (Settings)CurrentSettings.Clone();
-            SettingsDialog.IsOpen = true;
-        }
-
-        private void SettingsDialog_DialogClosing(object sender, DialogClosingEventArgs eventArgs)
-        {
-            if (Equals(eventArgs.Parameter, false))
-            {
-                CurrentSettings = (Settings)PrevioslySettings.Clone();
-                SettingsDialog.DataContext = CurrentSettings;
-
-            }
-            else
-            {
-                CurrentSettings.Save();
-                if (this.SensorsData.Count() > 0)
-                {
-                    UpdateSensarsDataTableDialog.IsOpen = true;
                 }
             }
         }
@@ -495,6 +524,13 @@ namespace CuttingForceMeasurement
         private void RefreshCOM_Click(object sender, RoutedEventArgs e)
         {
             LoadSerialPorts();
+        }
+
+        private void OpenInfo_Click(object sender, RoutedEventArgs e)
+        {
+            var infoWindow = new InfoWindow();
+            infoWindow.Owner = this;
+            infoWindow.ShowDialog();
         }
     }
 }

@@ -147,7 +147,7 @@ namespace CuttingForceMeasurement
         /// </summary>
         private void DefaultInit()
         {
-            BaudRate = 9600;
+            BaudRate = 115200;
             DataBits = 8;
             AccelerationCoef = 1;
             ForceCoef = 1;

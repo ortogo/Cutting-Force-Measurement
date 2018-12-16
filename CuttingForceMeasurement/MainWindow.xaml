@@ -42,6 +42,19 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"/>
         <Button 
+                        x:Name="OpenInfo"
+                    Click="OpenInfo_Click"
+                        Grid.Row="0"
+                        HorizontalAlignment="Right"
+                        Margin="0 0 114 0"
+                        Padding="0"
+                        Style="{DynamicResource MaterialDesignToolButton}">
+            <materialDesign:PackIcon
+                            Width="24" Height="24"
+                            Kind="InfoOutline"
+                            Foreground="{DynamicResource MaterialDesignPaper}"/>
+        </Button>
+        <Button 
                         x:Name="Settings"
                     Click="Settings_Click"
                         Grid.Row="0"
@@ -258,12 +271,12 @@
         <materialDesign:DialogHost
             x:Name="ExitDialog"
             Grid.Row="3"
-            DialogClosing="DialogHost_DialogClosing"
+            DialogClosing="DialogHost_ExitDialogClosing"
             HorizontalAlignment="Center" 
             VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
             <materialDesign:DialogHost.DialogContent>
                 <StackPanel Margin="16">
-                    <TextBlock>Вы действительно все сохранили и желаете закрыть приложение?</TextBlock>
+                    <TextBlock>Результаты записи не были сохранены</TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                         <Button 
                                 Style="{StaticResource MaterialDesignFlatButton}"
@@ -273,18 +286,27 @@
                                 
                                 >
                             <Button.CommandParameter>
-                                <system:Boolean>True</system:Boolean>
+                                <system:String>save</system:String>
                             </Button.CommandParameter>
-                            Согласен
+                            Сохранить
                         </Button>
                         <Button Style="{StaticResource MaterialDesignFlatButton}"
                                         IsCancel="True"
                                         Margin="0 8 8 0"
                                         Command="materialDesign:DialogHost.CloseDialogCommand">
                             <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
+                                <system:String>close</system:String>
                             </Button.CommandParameter>
-                            Нет
+                            Закрыть
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}"
+                                        IsCancel="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                            <Button.CommandParameter>
+                                <system:String>chancel</system:String>
+                            </Button.CommandParameter>
+                            Отмена
                         </Button>
                     </StackPanel>
                 </StackPanel>
