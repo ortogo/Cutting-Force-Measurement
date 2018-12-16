@@ -7,9 +7,9 @@
 
 # Используемые библиотеки
 
-MaterialDesignThemes for WPF - набор стилей для окон
-EPPlus - для создания документа Excel
-Newtonsoft.Json - для работы с JSON
+* MaterialDesignThemes for WPF - набор стилей для окон
+* EPPlus - для создания документа Excel
+* Newtonsoft.Json - для работы с JSON
 
 # Инструкция
 
