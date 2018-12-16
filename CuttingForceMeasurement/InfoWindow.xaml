@@ -7,10 +7,11 @@
         mc:Ignorable="d"
         Title="О приложении" Height="480" Width="640"
         MinHeight="480" MinWidth="640"
+        MaxHeight="480" MaxWidth="640"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
      TextElement.FontWeight="Regular"
-     TextElement.FontSize="13"
+     TextElement.FontSize="16"
      TextOptions.TextFormattingMode="Ideal"
      TextOptions.TextRenderingMode="Auto"
      Background="{DynamicResource MaterialDesignPaper}"
@@ -52,5 +53,52 @@
                 Kind="Close"
                 Foreground="{DynamicResource MaterialDesignPaper}"/>
         </Button>
+
+        <StackPanel Grid.Row="1"
+                    Margin="8">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="422"
+                      >
+            <StackPanel>
+                <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Foreground="{DynamicResource PrimaryHueMidBrush}">
+                # Cutting Force Measurement v1.0.1.1
+                </TextBlock>
+                <TextBlock Margin="8">
+                Приложение позволит Вам записать в реальном времени показания датчиков.
+                </TextBlock>
+                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Foreground="{DynamicResource PrimaryHueMidBrush}">
+                # Инструкция
+                    </TextBlock>
+                    <StackPanel Margin="8">
+                    <TextBlock>
+                    1. Для начала измерений запустите приложение.
+                    </TextBlock>
+                    <TextBlock>
+                    2. Введите ваши данные.
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap">
+                    3. В поле для выбора COM выберите тот, к которому подключено устройство. В большинстве случаев он будет выбран по умолчанию. Если оборудование переподключено или подключено позже нажмите кнопку "Обновить" (фиолетовая стрелка по кругу).
+                    </TextBlock>
+                    <TextBlock>
+                    4. Запустите станок.
+                    </TextBlock>
+                    <TextBlock>
+                    5. Нажмите кнопку "Записать" и получите необходимое количество информации.
+                    </TextBlock>
+                    <TextBlock>
+                    6. Нажмите кнопку "Остановить".
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap">
+                    7. Сохраните информацию с помощью кнопки "Сохранить". Имя файла будет создано автоматически и расположения сохранения будет рабочий стол. Эти данные можно изменить.
+                    </TextBlock>
+                    <TextBlock>
+                    8. После сохранени убедитесь, что все прошло успешно.
+                    </TextBlock>
+                    <TextBlock TextWrapping="Wrap">
+                    9. Для повторной записи можно нажать кнопку "Записать", тогда таблица результатов будет очищена и запись начнется сначала.
+                    </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+        </ScrollViewer>
+        </StackPanel>
     </Grid>
 </Window>
