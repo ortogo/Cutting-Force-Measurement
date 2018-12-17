@@ -252,7 +252,7 @@ namespace CuttingForceMeasurement
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 this.StopReading();
-                this.ShowMessage("Проблемы: " + e.Message);
+                this.ShowMessage($"Ошибка {e.GetType().Name}: { e.Message }");
             });
 
         }

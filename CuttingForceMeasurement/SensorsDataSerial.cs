@@ -14,6 +14,7 @@ namespace CuttingForceMeasurement
     public class SensorsDataSerial : SensorsData
     {
         const int SDI_PARAMS_COUNT = 6;
+        const int AMPERAGE_INDEX = 4;
 
         private string SerialPortName { get; set; }
         private SerialPort Sensors { get; set; }
@@ -64,17 +65,18 @@ namespace CuttingForceMeasurement
                 string[] sdiParamsString = input.Split(separatingChars, StringSplitOptions.RemoveEmptyEntries);
                 double[] sdiParams = new double[SDI_PARAMS_COUNT];
 
-                bool isAllParamsNull = true;
+                bool machineStoped = true;
                 
                 for (int i = 0; i < SDI_PARAMS_COUNT; i ++)
                 {
                     sdiParams[i] = Double.Parse(sdiParamsString[i]);
-                    if (i != 0 && sdiParams[i] != 0)
-                    {
-                        isAllParamsNull = false;
-                    }
+                    
                 }
-                if (isAllParamsNull)
+                if (sdiParams[AMPERAGE_INDEX] != 0)
+                {
+                    machineStoped = false;
+                }
+                if (machineStoped)
                 {
                     return;
                 }
@@ -95,7 +97,10 @@ namespace CuttingForceMeasurement
             }
             catch (Exception e)
             {
+                /* 
+                Console.WriteLine("Ошибка при чтении");
                 Main.TriggerErrorReading(e);
+                */
             }
             
         }
@@ -107,6 +112,7 @@ namespace CuttingForceMeasurement
                 Sensors.Close();
             } catch(Exception e)
             {
+                Console.WriteLine("Ошибкапри закрытии");
                 Main.TriggerErrorReading(e);
             }
         }
