@@ -32,7 +32,7 @@ namespace CuttingForceMeasurement
             };
             Main.UpdateSensorsData(se);
             count++;
-            Main.SetTimeReading(count);
+            Main.SetTimeReading((double)count);
             Task.Delay(100).Wait();
         }
     }

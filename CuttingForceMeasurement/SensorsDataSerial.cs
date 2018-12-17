@@ -84,9 +84,11 @@ namespace CuttingForceMeasurement
                 {
                     SensorsTime = sdiParams[0];
                 }
+
+                var curTime = sdiParams[0] - (double)SensorsTime;
                 SensorDataItem sdi = new SensorDataItem()
                 {
-                    Time = sdiParams[0] - (double)SensorsTime,
+                    Time = curTime,
                     Acceleration = sdiParams[1] * Main.CurrentSettings.AccelerationCoef,
                     Force = sdiParams[2] * Main.CurrentSettings.ForceCoef,
                     Voltage = sdiParams[3] * Main.CurrentSettings.VoltageCoef,
@@ -94,6 +96,7 @@ namespace CuttingForceMeasurement
                     Rpm = sdiParams[5] * Main.CurrentSettings.RpmCoef,
                 };
                 Main.UpdateSensorsData(sdi);
+                Main.SetTimeReading(curTime);
             }
             catch (Exception e)
             {

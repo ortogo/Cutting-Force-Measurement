@@ -261,7 +261,7 @@ namespace CuttingForceMeasurement
         /// Обновление времени записи на представлении
         /// </summary>
         /// <param name="time">текущее время записи</param>
-        public void SetTimeReading(int time)
+        public void SetTimeReading(double time)
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
