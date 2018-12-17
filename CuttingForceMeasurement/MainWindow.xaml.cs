@@ -30,6 +30,7 @@ namespace CuttingForceMeasurement
         private SensorsData CurrentSensorsData;
         private string oldGroupName = "";
         private string oldStudentName = "";
+        private int itemsCounter = 0;
 
         public Settings CurrentSettings { get; set; }
         public Settings PrevioslySettings { get; set; }
@@ -239,6 +240,12 @@ namespace CuttingForceMeasurement
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
                 SensorsData.Add(sensorDataItem);
+                if(itemsCounter >= 7)
+                {
+                    SensorsDataTable.ScrollIntoView(sensorDataItem);
+                    itemsCounter = 0;
+                }
+                itemsCounter++;
             });
 
         }
