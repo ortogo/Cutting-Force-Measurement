@@ -114,6 +114,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Dialogs\ExitDialog.xaml.cs">
+      <DependentUpon>ExitDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\MessageDialog.xaml.cs">
+      <DependentUpon>MessageDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\ProccesDialog.xaml.cs">
+      <DependentUpon>ProccesDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\SettingsDialog.xaml.cs">
+      <DependentUpon>SettingsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Dialogs\UpdateResultsTableDialog.xaml.cs">
+      <DependentUpon>UpdateResultsTableDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="InfoWindow.xaml.cs">
       <DependentUpon>InfoWindow.xaml</DependentUpon>
     </Compile>
@@ -122,6 +137,29 @@
     <Compile Include="SensorsDataRandom.cs" />
     <Compile Include="SensorsDataSerial.cs" />
     <Compile Include="Settings.cs" />
+    <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\MessageDialogViewModel.cs" />
+    <Compile Include="ViewModels\SettingsDialogViewModel.cs" />
+    <Page Include="Dialogs\ExitDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\MessageDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\ProccesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\SettingsDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Dialogs\UpdateResultsTableDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="InfoWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

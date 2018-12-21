@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        
         mc:Ignorable="d"
         Title="Измерение усилия на резце"
         Height="480" Width="780"
@@ -18,473 +18,285 @@
      FontFamily="{DynamicResource MaterialDesignFont}" SizeToContent="Width" Icon="Images/baseline_play_for_work_darkpurple_48dp.png" AllowsTransparency="True" WindowStyle="None"
         >
 
-    <Grid >
-        <Grid.RowDefinitions>
-            <RowDefinition Height="32"/>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="Auto"/>
-        </Grid.RowDefinitions>
-        <!-- Navigation Bar -->
-        <StackPanel
-            x:Name="NavigationBar"
-            MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
-            Orientation="Horizontal"
-            Background="{DynamicResource PrimaryHueMidBrush}"
-            Grid.Row="0"/>
+    <materialDesign:DialogHost CloseOnClickAway="True" x:Name="CurrentDialog" Identifier="Main">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-        <TextBlock
-            MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
+            <!-- Navigation Bar -->
+            <StackPanel
+                x:Name="NavigationBar"
+                MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
+                Orientation="Horizontal"
+                Background="{DynamicResource PrimaryHueMidBrush}"
+                Grid.Row="0"/>
+
+            <TextBlock
+                MouseLeftButtonDown="NavigationBar_MouseLeftButtonDown"
                 Grid.Row="0"
                 Text="Измерение усилия на резце" 
                 Foreground="{DynamicResource MaterialDesignPaper}"
                 FontSize="16"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"/>
-        <Button 
-                        x:Name="OpenInfo"
-                    Click="OpenInfo_Click"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        Margin="0 0 114 0"
-                        Padding="0"
-                        Style="{DynamicResource MaterialDesignToolButton}">
-            <materialDesign:PackIcon
-                            Width="24" Height="24"
-                            Kind="InfoOutline"
-                            Foreground="{DynamicResource MaterialDesignPaper}"/>
-        </Button>
-        <Button 
-                        x:Name="Settings"
-                    Click="Settings_Click"
-                        Grid.Row="0"
-                        HorizontalAlignment="Right"
-                        Margin="0 0 78 0"
-                        Padding="0"
-                        Style="{DynamicResource MaterialDesignToolButton}">
-            <materialDesign:PackIcon
-                            Width="24" Height="24"
-                            Kind="Settings"
-                            Foreground="{DynamicResource MaterialDesignPaper}"/>
-        </Button>
-        <Button
-            x:Name="MinimizeWindow"
+            <Button 
+                x:Name="OpenInfo"
+                Click="OpenInfo_Click"
+                Grid.Row="0"
+                HorizontalAlignment="Right"
+                Margin="0 0 114 0"
+                Padding="0"
+                Style="{DynamicResource MaterialDesignToolButton}"
+                ToolTip="Информация">
+                <materialDesign:PackIcon
+                    Width="24" Height="24"
+                    Kind="InfoOutline"
+                    Foreground="{DynamicResource MaterialDesignPaper}"/>
+            </Button>
+            <Button 
+                x:Name="Settings"
+                Click="Settings_Click"
+                Grid.Row="0"
+                HorizontalAlignment="Right"
+                Margin="0 0 78 0"
+                Padding="0"
+                Style="{DynamicResource MaterialDesignToolButton}"
+                ToolTip="Настройки">
+                <materialDesign:PackIcon
+                    Width="24" Height="24"
+                    Kind="Settings"
+                    Foreground="{DynamicResource MaterialDesignPaper}"/>
+            </Button>
+            <Button
+                x:Name="MinimizeWindow"
                 Grid.Row="0"
                 HorizontalAlignment="Right"
                 Margin="0 0 44 0"
                 Padding="0"
                 Style="{DynamicResource MaterialDesignToolButton}"
-                Click="MinimizeWindow_Click">
-            <materialDesign:PackIcon
-                Width="24" Height="24"
-                Kind="WindowMinimize"
-                Foreground="{DynamicResource MaterialDesignPaper}"/>
-        </Button>
-        <Button
+                Click="MinimizeWindow_Click"
+                ToolTip="Свернуть">
+                <materialDesign:PackIcon
+                    Width="24" Height="24"
+                    Kind="WindowMinimize"
+                    Foreground="{DynamicResource MaterialDesignPaper}"/>
+            </Button>
+            <Button
                 x:Name="Exit"
                 Grid.Row="0"
                 HorizontalAlignment="Right"
                 Margin="0 0 10 0"
                 Padding="0"
                 Style="{DynamicResource MaterialDesignToolButton}"
-                Click="Exit_Click">
-            <materialDesign:PackIcon
-                Width="24" Height="24"
-                Kind="Close"
-                Foreground="{DynamicResource MaterialDesignPaper}"/>
-        </Button>
-        <StackPanel
-            Orientation="Horizontal"
-            Grid.Row="1">
-            <materialDesign:PackIcon
-                Width="32" Height="32"
-                Margin="10 0 0 0"
-                VerticalAlignment="Bottom"
-                Kind="AccountCircle"
-                Foreground="Gray"/>
-
-            <TextBlock
-                FontSize="16"
-                Foreground="Black"
-                VerticalAlignment="Bottom"
-                Margin="10 0 0 5"
-                >
-                Выполнил
-            </TextBlock>
-            <TextBox
-                x:Name="GroupName"
-                Width="124"
-                Margin="10 0 0 0"
-                materialDesign:HintAssist.Hint="студент группы"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                FontSize="16"
-                Foreground="Black"
-                />
-            <TextBox
-                x:Name="StudentName"
-                Width="124"
-                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                Margin="10 0 0 0"
-                FontSize="16"
-                Foreground="Black"
-                materialDesign:HintAssist.Hint="Фамилия Имя"
-                />
-
-            <materialDesign:PackIcon
-                Width="32" Height="32"
-                Margin="10 0 0 0"
-                VerticalAlignment="Bottom"
-                Kind="Bug"
-                Foreground="Gray"/>
-
-            <ComboBox
-                x:Name="ComPort"
-                Style="{StaticResource MaterialDesignComboBox}"
-                Width="128"
-                VerticalAlignment="Bottom"
-                Margin="10 0 0 0"
-                FontSize="16"
-                materialDesign:HintAssist.Hint="COM Port"
-                ToolTip="Выберите COM к которому подключен прибор"
-                IsEnabled="False"
-                >
-                <ComboBoxItem IsSelected="True">Загрузка</ComboBoxItem>
-            </ComboBox>
-            <Button x:Name="RefreshCOM"
+                Click="Exit_Click"
+                ToolTip="Закрыть">
+                <materialDesign:PackIcon
+                    Width="24" Height="24"
+                    Kind="Close"
+                    Foreground="{DynamicResource MaterialDesignPaper}"/>
+            </Button>
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Row="1">
+                <materialDesign:PackIcon
+                    Width="32" Height="32"
+                    Margin="10 0 0 0"
+                    VerticalAlignment="Bottom"
+                    Kind="AccountCircle"
+                    Foreground="Gray"/>
+                <TextBlock
+                    FontSize="16"
+                    Foreground="Black"
+                    VerticalAlignment="Bottom"
+                    Margin="10 0 0 5">
+                    Выполнил
+                </TextBlock>
+                <TextBox
+                    x:Name="GroupName"
+                    Width="124"
+                    Margin="10 0 0 0"
+                    materialDesign:HintAssist.Hint="студент группы"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    FontSize="16"
+                    Foreground="Black"/>
+                <TextBox
+                    x:Name="StudentName"
+                    Width="124"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Margin="10 0 0 0"
+                    FontSize="16"
+                    Foreground="Black"
+                    materialDesign:HintAssist.Hint="Фамилия Имя"/>
+                <materialDesign:PackIcon
+                    Width="32" Height="32"
+                    Margin="10 0 0 0"
+                    VerticalAlignment="Bottom"
+                    Kind="Bug"
+                    Foreground="Gray" 
+                    ToolTip="COM-порт"/>
+                <ComboBox
+                    x:Name="ComPort"
+                    Style="{StaticResource MaterialDesignComboBox}"
+                    Width="128"
+                    VerticalAlignment="Bottom"
+                    Margin="10 0 0 0"
+                    FontSize="16"
+                    materialDesign:HintAssist.Hint="COM Port"
+                    ToolTip="COM-порт"
+                    IsEnabled="False">
+                    <ComboBoxItem IsSelected="True">Загрузка</ComboBoxItem>
+                </ComboBox>
+                <Button x:Name="RefreshCOM"
                     Padding="0"
                     Margin="10 0 0 0"
                     VerticalAlignment="Bottom"
                     Style="{StaticResource MaterialDesignFlatButton}"
-                    Click="RefreshCOM_Click">
-                <materialDesign:PackIcon
-                Width="32" Height="32"
-                Kind="Reload"
-                Foreground="{DynamicResource PrimaryHueMidBrush}"/>
-            </Button>
-            
-        </StackPanel>
-        <StackPanel
-            Grid.Row="2"
-            Orientation="Horizontal"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Center">
-            <Button
-                x:Name="Record"
-                Width="124"
-                Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedAccentButton}"
-                Click="Record_Click">
-                Записать
-            </Button>
-            <Button
-                x:Name="ExportExcel"
-                Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedButton}"
-                Click="ExportExcel_Click">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock
-                        VerticalAlignment="Center">Сохранить</TextBlock>
+                    Click="RefreshCOM_Click"
+                    ToolTip="Обновить список COM-портов">
                     <materialDesign:PackIcon
-                        Kind="FileExcel" 
-                        Height="24" Width="24"
-                        Margin="2 0 0 0"/>
-                </StackPanel>
-            </Button>
-            <Button
-                x:Name="Reset"
-                Width="124"
-                Margin="10 0 0 0"
-                Style="{DynamicResource MaterialDesignRaisedButton}"
-                Click="Reset_Click">
-                Сбросить
-            </Button>
-        </StackPanel>
-        <StackPanel
-            Grid.Row="3"
-            Margin="10 0 10 0">
-            <materialDesign:Card Padding="10">
-                <TextBlock
+                        Width="32" Height="32"
+                        Kind="Reload"
+                        Foreground="{DynamicResource PrimaryHueMidBrush}"/>
+                </Button>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="2"
+                Orientation="Horizontal"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Center">
-                Время записи: <Run x:Name="TimeRecording">готов</Run>
-                </TextBlock>
-            </materialDesign:Card>
-            <materialDesign:Card Padding="10 0 10 0" Margin="0 10 0 0">
-                <ListView 
-                Width="740"
-                Height="295"
-                x:Name="SensorsDataTable"
-                   ScrollViewer.HorizontalScrollBarVisibility="Disabled"
-                >
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding Path=Time}">
-                                <TextBlock  TextAlignment="Center">
-                                Время,
-                            <LineBreak />
-                                мс
-                                </TextBlock>
-                            </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Acceleration}">
-                                <TextBlock  TextAlignment="Center">
-                                Ускорение,
-                            <LineBreak />
-                                м/с<Run BaselineAlignment="Superscript" FontSize="8">2</Run>
-                                </TextBlock>
-                            </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Force}">
-                                <TextBlock  TextAlignment="Center">
-                                Усилие,
-                            <LineBreak />
-                                кН
-                                </TextBlock>
-
-                            </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0}, Path=Voltage}">
-                                <TextBlock  TextAlignment="Center">
-                                Напряжение,
-                            <LineBreak />
-                                В
-                                </TextBlock>
-
-                            </GridViewColumn>
-                            <GridViewColumn  Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Amperage}">
-                                <TextBlock TextAlignment="Center">
-                                Ток,
-                            <LineBreak />
-                                 А
-                                </TextBlock>
-                            </GridViewColumn>
-                            <GridViewColumn Width="120" DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Rpm}">
-                                <TextBlock  TextAlignment="Center">
-                                Обороты,
-                            <LineBreak />
-                                микросек
-                                <Run BaselineAlignment="Superscript" FontSize="8">-1</Run>
-                                </TextBlock>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-
-                </ListView>
-            </materialDesign:Card>
-        </StackPanel>
-        <materialDesign:DialogHost
-            x:Name="ExitDialog"
-            Grid.Row="3"
-            DialogClosing="DialogHost_ExitDialogClosing"
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
-            <materialDesign:DialogHost.DialogContent>
-                <StackPanel Margin="16">
-                    <TextBlock>Результаты записи не были сохранены</TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button 
-                                Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsDefault="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand"
-                                
-                                >
-                            <Button.CommandParameter>
-                                <system:String>save</system:String>
-                            </Button.CommandParameter>
+                <Button
+                    x:Name="Record"
+                    Width="124"
+                    Margin="10 0 0 0"
+                    Style="{DynamicResource MaterialDesignRaisedAccentButton}"
+                    Click="Record_Click">
+                    Запись
+                </Button>
+                <Button
+                    x:Name="ExportExcel"
+                    Margin="10 0 0 0"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"
+                    Click="ExportExcel_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock
+                            VerticalAlignment="Center">
                             Сохранить
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:String>close</system:String>
-                            </Button.CommandParameter>
-                            Закрыть
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:String>chancel</system:String>
-                            </Button.CommandParameter>
-                            Отмена
-                        </Button>
+                        </TextBlock>
+                        <materialDesign:PackIcon
+                            Kind="FileExcel" 
+                            Height="24" Width="24"
+                            Margin="2 0 0 0"/>
                     </StackPanel>
-                </StackPanel>
-            </materialDesign:DialogHost.DialogContent>
-        </materialDesign:DialogHost>
-
-        <materialDesign:DialogHost
-            x:Name="MessageDialog"
-            Grid.Row="3"
-            
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
-            <materialDesign:DialogHost.DialogContent>
-                <StackPanel Margin="16">
-                    <TextBlock x:Name="TextMessageDialog"></TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button x:Name="MessageDialogButtonOk"
-                            Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsDefault="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:Boolean>True</system:Boolean>
-                            </Button.CommandParameter>
-                            Хорошо
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </materialDesign:DialogHost.DialogContent>
-        </materialDesign:DialogHost>
-        <!-- Settings Dialog -->
-        <materialDesign:DialogHost
-            x:Name="SettingsDialog"
-            Identifier="SettingsDialog"
-            DialogClosing="SettingsDialog_DialogClosing"
-            CloseOnClickAway="True"
-            Grid.Row="0"
-            
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top"
-            >
-            <materialDesign:DialogHost.DialogContent >
-                
-                <StackPanel
-                    MaxHeight="480"
-                    Margin="10"
-                    >
-                    <TextBlock Style="{StaticResource MaterialDesignTitleTextBlock}" Margin="10">
-                        Настройки
+                </Button>
+                <Button
+                    x:Name="Reset"
+                    Width="124"
+                    Margin="10 0 0 0"
+                    Style="{DynamicResource MaterialDesignRaisedButton}"
+                    Click="Reset_Click">
+                    Сброс
+                </Button>
+            </StackPanel>
+            <StackPanel
+                Grid.Row="3"
+                Margin="10 0 10 0">
+                <materialDesign:Card Padding="10">
+                    <TextBlock
+                        VerticalAlignment="Center">
+                            Время записи: <Run x:Name="TimeRecording">готов</Run>
                     </TextBlock>
-                    <ScrollViewer
-                        VerticalScrollBarVisibility="Auto"
-                        
-                        Height="320">
-                    <StackPanel>
-                        <TextBlock 
-                            Margin="0 10 0 0"
-                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
-                            Text="Подключение к устройству"></TextBlock>
-                        <Border Margin="0 10 0 0" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" />
-                        <StackPanel Margin="10 0 10 0">
-                            <StackPanel Orientation="Horizontal" Height="48">
-                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Скорость"></TextBlock>
-                                    <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding BaudRate}"  PreviewTextInput="Number_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Height="48">
-                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Число бит"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding DataBits}" PreviewTextInput="Number_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                        </StackPanel>
-                        <TextBlock 
-                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
-                            Margin="0 10 0 0"
-                            Text="Поправочные коэффициенты"></TextBlock>
-                        <Border Margin="0 10 0 0" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" />
-                        <StackPanel Margin="10 0 10 0">
-                            <StackPanel Orientation="Horizontal"  Height="48">
-                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Ускорение"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AccelerationCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Height="48">
-                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Усилие" ></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding ForceCoef}" PreviewTextInput="Double_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal"  Height="48">
-                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Напряжение"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding VoltageCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Height="48">
-                                <TextBlock  VerticalAlignment="Center" Width="200" Text="Ток"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding AmperageCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                            <StackPanel Orientation="Horizontal" Height="48">
-                                <TextBlock VerticalAlignment="Center" Width="200" Text="Обороты"></TextBlock>
-                                <TextBox VerticalAlignment="Center" Width="50" TextAlignment="Center" Text="{Binding RpmCoef}"  PreviewTextInput="Double_PreviewTextInput"></TextBox>
-                            </StackPanel>
-                            
-                        </StackPanel>
-                        <TextBlock Style="{StaticResource MaterialDesignSubheadingTextBlock}" Margin="0 10 0 0" Text="Дополнительно"></TextBlock>
-                        <Border Margin="0 10 0 0" BorderThickness="0 1 0 0" BorderBrush="{DynamicResource MaterialDesignDivider}" />
-                        <StackPanel Margin="10 0 10 0">
-                            <StackPanel Orientation="Horizontal" Height="48">
-                                <TextBlock VerticalAlignment="Center" Width="200" Text="Демо режим"/>
-                                <ToggleButton
-                                    x:Name="DemoMode"
-                                    VerticalAlignment="Center"
-                                    Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
-                                    IsChecked="{Binding DemoMode}"
-                                    Checked="OnDemoMode"
-                                    Unchecked="OffDemoMode"/>
-                            </StackPanel>
-                        </StackPanel>
-                    </StackPanel>
-                </ScrollViewer>
-                    <StackPanel Height="48" Orientation="Horizontal" HorizontalAlignment="Right">
-                        <Button VerticalAlignment="Center"
-                                Style="{StaticResource MaterialDesignFlatButton}"
-                                IsDefault="True"
-                                Margin="0 10 10 0"
-                                HorizontalAlignment="Right"
-                                Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:Boolean>True</system:Boolean>
-                            </Button.CommandParameter>
-                            Сохранить
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
-                            </Button.CommandParameter>
-                            Закрыть
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-                
-            </materialDesign:DialogHost.DialogContent>
-            
-        </materialDesign:DialogHost>
-        
-        <!-- Диалог обновить ли данные в таблице -->
-        <materialDesign:DialogHost
-            x:Name="UpdateSensarsDataTableDialog"
-            Grid.Row="3"
-            DialogClosing="UpdateSensarsDataTableDialog_DialogClosing"
-            HorizontalAlignment="Center" 
-            VerticalAlignment="Center" Margin="390,2,390,18" Grid.RowSpan="2">
-            <materialDesign:DialogHost.DialogContent>
-                <StackPanel Margin="16">
-                    <TextBlock>Обновить данные в таблице?</TextBlock>
-                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
-                        <Button 
-                                Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsDefault="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand"
-                                
-                                >
-                            <Button.CommandParameter>
-                                <system:Boolean>True</system:Boolean>
-                            </Button.CommandParameter>
-                            Обновить
-                        </Button>
-                        <Button Style="{StaticResource MaterialDesignFlatButton}"
-                                        IsCancel="True"
-                                        Margin="0 8 8 0"
-                                        Command="materialDesign:DialogHost.CloseDialogCommand">
-                            <Button.CommandParameter>
-                                <system:Boolean>False</system:Boolean>
-                            </Button.CommandParameter>
-                            Нет
-                        </Button>
-                    </StackPanel>
-                </StackPanel>
-            </materialDesign:DialogHost.DialogContent>
-        </materialDesign:DialogHost>
-    </Grid>
-    
+                </materialDesign:Card>
+                <materialDesign:Card Margin="0 10 0 0">
+                    <ListView
+                        x:Name="SensorsDataTable"
+                        Width="758"
+                        Height="295"
+                        Padding="0"
+                        ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn 
+                                    DisplayMemberBinding="{Binding Path=Time}"
+                                    Width="75">
+                                    <GridViewColumnHeader HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock
+                                        TextAlignment="Center">
+                                        Время,
+                                        <LineBreak />
+                                        мс
+                                        </TextBlock>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                                <GridViewColumn
+                                    Width="140"
+                                    DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Acceleration}">
+                                    <GridViewColumnHeader HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock
+                                        TextAlignment="Center" HorizontalAlignment="Center">
+                                        Ускорение 
+                                        <LineBreak />
+                                        ползуна, м/с
+                                            <Run BaselineAlignment="Superscript" FontSize="8">2</Run>
+                                        </TextBlock>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                                <GridViewColumn
+                                    Width="110"
+                                    DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Force}">
+                                    <GridViewColumnHeader HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock
+                                            TextAlignment="Center">
+                                            Усилие
+                                            <LineBreak/>
+                                            резания, кН
+                                        </TextBlock>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                                <GridViewColumn
+                                    Width="120"
+                                    DisplayMemberBinding="{Binding  StringFormat={}{0:0}, Path=Voltage}">
+                                    <GridViewColumnHeader HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock
+                                        TextAlignment="Center">
+                                        Напряжение
+                                        <LineBreak />
+                                        питания ЭД, В
+                                        </TextBlock>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                                <GridViewColumn
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Amperage}">
+                                    <GridViewColumnHeader HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock
+                                        TextAlignment="Center">
+                                        Ток потребления
+                                        <LineBreak/>
+                                        ЭД, А
+                                        </TextBlock>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                                <GridViewColumn 
+                                    Width="150"
+                                    DisplayMemberBinding="{Binding  StringFormat={}{0:0.000}, Path=Rpm}">
+                                    <GridViewColumnHeader HorizontalAlignment="Center" VerticalAlignment="Top">
+                                        <TextBlock  
+                                        TextAlignment="Center">
+                                        Частота
+                                        <LineBreak />
+                                        вращения, мкс
+                                        </TextBlock>
+                                    </GridViewColumnHeader>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </materialDesign:Card>
+            </StackPanel>
+        </Grid>
+    </materialDesign:DialogHost>
 </Window>

@@ -27,8 +27,8 @@ namespace CuttingForceMeasurement
             Sensors = new SerialPort
             {
                 PortName = SerialPortName,
-                BaudRate = main.CurrentSettings.BaudRate,
-                DataBits = main.CurrentSettings.DataBits,
+                BaudRate = main.settings.BaudRate,
+                DataBits = main.settings.DataBits,
                 Parity = Parity.None,
                 StopBits = StopBits.One,
                 Handshake = Handshake.None,
@@ -89,16 +89,16 @@ namespace CuttingForceMeasurement
                 SensorDataItem sdi = new SensorDataItem()
                 {
                     Time = curTime,
-                    Acceleration = sdiParams[1] * Main.CurrentSettings.AccelerationCoef,
-                    Force = sdiParams[2] * Main.CurrentSettings.ForceCoef,
-                    Voltage = sdiParams[3] * Main.CurrentSettings.VoltageCoef,
-                    Amperage = sdiParams[4] * Main.CurrentSettings.AmperageCoef,
-                    Rpm = sdiParams[5] * Main.CurrentSettings.RpmCoef,
+                    Acceleration = sdiParams[1] * Main.settings.AccelerationCoef,
+                    Force = sdiParams[2] * Main.settings.ForceCoef,
+                    Voltage = sdiParams[3] * Main.settings.VoltageCoef,
+                    Amperage = sdiParams[4] * Main.settings.AmperageCoef,
+                    Rpm = sdiParams[5] * Main.settings.RpmCoef,
                 };
                 Main.UpdateSensorsData(sdi);
                 Main.SetTimeReading(curTime);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 /* 
                 Console.WriteLine("Ошибка при чтении");
