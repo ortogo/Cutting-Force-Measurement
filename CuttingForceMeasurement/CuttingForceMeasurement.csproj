@@ -43,6 +43,8 @@
     <WarningLevel>4</WarningLevel>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,6 +56,7 @@
     <ErrorReport>none</ErrorReport>
     <WarningLevel>0</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
+    <DocumentationFile>bin\Release\CuttingForceMeasurement.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>ADB09E000174CC4BF7CBB0575C9BF18D765EE3B6</ManifestCertificateThumbprint>
@@ -251,6 +254,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="baseline_play_for_work_darkpurple_48dp_1EC_icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
