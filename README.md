@@ -3,13 +3,13 @@
 Приложение позволит Вам записать в реальном времени показания датчиков.
 Графический интерфейс создан на основе современной дизайнерской технологии MaterialDesign и системе построения пользовательских приложений WPF
 
-![Главное окно](https://github.com/ortogo/CuttingForceMeasurement/raw/master/screenshots/MainWindow.JPG)
+![Главное окно](https://github.com/ortogo/CuttingForceMeasurement/raw/master/screenshots/MainWindow.webp)
 
 # Используемые библиотеки
 
-* MaterialDesignThemes for WPF - набор стилей для окон
-* EPPlus - для создания документа Excel
-* Newtonsoft.Json - для работы с JSON
+* [MaterialDesignInXaml](http://materialdesigninxaml.net/) - набор стилей для окон
+* [EPPlus](https://github.com/JanKallman/EPPlus) - для создания документа Excel
+* [Newtonsoft.Json](https://www.newtonsoft.com/json) - для работы с JSON
 
 # Инструкция
 
