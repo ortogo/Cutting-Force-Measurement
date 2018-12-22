@@ -89,11 +89,11 @@ namespace CuttingForceMeasurement
                 SensorDataItem sdi = new SensorDataItem()
                 {
                     Time = curTime,
-                    Acceleration = sdiParams[1] * Main.settings.AccelerationCoef,
-                    Force = sdiParams[2] * Main.settings.ForceCoef,
-                    Voltage = sdiParams[3] * Main.settings.VoltageCoef,
-                    Amperage = sdiParams[4] * Main.settings.AmperageCoef,
-                    Rpm = sdiParams[5] * Main.settings.RpmCoef,
+                    Acceleration = sdiParams[1],
+                    Force = sdiParams[2],
+                    Voltage = sdiParams[3],
+                    Amperage = sdiParams[4],
+                    Rpm = sdiParams[5],
                 };
                 Main.UpdateSensorsData(sdi);
                 Main.SetTimeReading(curTime);

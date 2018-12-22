@@ -12,6 +12,7 @@ using OfficeOpenXml;
 using MaterialDesignThemes.Wpf;
 using CuttingForceMeasurement.Dialogs;
 using CuttingForceMeasurement.ViewModels;
+using System.Collections.Generic;
 
 namespace CuttingForceMeasurement
 {
@@ -38,6 +39,7 @@ namespace CuttingForceMeasurement
         public SettingsDialogViewModel settings;
         
         public ObservableCollection<SensorDataItem> SensorsData = new ObservableCollection<SensorDataItem>();
+        private List<SensorDataItem> SensorsDataSource = new List<SensorDataItem>();
 
         /// <summary>
         /// Здесь проводится загрузка активных COM портов, загрузка настроек приложения
@@ -242,10 +244,20 @@ namespace CuttingForceMeasurement
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
-                SensorsData.Add(sensorDataItem);
+                var sensorDataItemWith = new SensorDataItem
+                {
+                    Time = sensorDataItem.Time,
+                    Acceleration = sensorDataItem.Acceleration * settings.AccelerationCoef,
+                    Force = sensorDataItem.Force * settings.ForceCoef,
+                    Voltage = sensorDataItem.Voltage * settings.VoltageCoef,
+                    Amperage = sensorDataItem.Amperage * settings.AmperageCoef,
+                    Rpm = sensorDataItem.Rpm * settings.RpmCoef,
+                };
+                SensorsData.Add(sensorDataItemWith);
+                SensorsDataSource.Add(sensorDataItem);
                 if (itemsCounter >= 7)
                 {
-                    SensorsDataTable.ScrollIntoView(sensorDataItem);
+                    SensorsDataTable.ScrollIntoView(sensorDataItemWith);
                     itemsCounter = 0;
                 }
                 itemsCounter++;
@@ -300,6 +312,7 @@ namespace CuttingForceMeasurement
         {
             TimeRecording.Text = "готов";
             SensorsData.Clear();
+            SensorsDataSource.Clear();
             StopReading();
             isSaved = true;
         }
@@ -510,12 +523,13 @@ namespace CuttingForceMeasurement
             isSaved = false;
             for (int i = 0; i < SensorsData.Count(); i++)
             {
+                var sdis = SensorsDataSource[i];
                 var sdi = SensorsData[i];
-                sdi.Acceleration *= settings.AccelerationCoef / settings.PrevioslySettings.AccelerationCoef;
-                sdi.Force *= settings.ForceCoef / settings.PrevioslySettings.ForceCoef;
-                sdi.Voltage *= settings.VoltageCoef / settings.PrevioslySettings.VoltageCoef;
-                sdi.Amperage *= settings.AmperageCoef / settings.PrevioslySettings.AmperageCoef;
-                sdi.Rpm *= settings.RpmCoef / settings.PrevioslySettings.RpmCoef;
+                sdi.Acceleration = sdis.Acceleration * settings.AccelerationCoef;
+                sdi.Force = sdis.Force * settings.ForceCoef;
+                sdi.Voltage = sdis.Voltage * settings.VoltageCoef;
+                sdi.Amperage = sdis.Amperage * settings.AmperageCoef;
+                sdi.Rpm = sdis.Rpm * settings.RpmCoef;
                 // Научится динамически изменять значение
                 SensorsData.RemoveAt(i);
                 SensorsData.Insert(i, sdi);
