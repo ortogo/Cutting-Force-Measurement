@@ -275,7 +275,7 @@ namespace CuttingForceMeasurement
         {
             this.Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Normal, (ThreadStart)delegate ()
             {
-                this.TimeRecording.Text = (time.ToString());
+            this.TimeRecording.Text = $"{time.ToString()} мс";
             });
 
         }
@@ -358,7 +358,7 @@ namespace CuttingForceMeasurement
         private string SerializeToText()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine("Время, мс\tУскорение, м/с^2\tУсилие, кН\tНапряжение, В\tТок, А\tЧастота об/микросек\t");
+            sb.AppendLine("Время, мс\tУскорение ползуна, м/с^2\tУсилие резания, кН\tНапряжение питания ЭД, В\tТок потребления ЭД, А\tЧастота вращения мкс\t");
             foreach (SensorDataItem sdi in SensorsData)
             {
                 sb.AppendLine(sdi.ToString());
