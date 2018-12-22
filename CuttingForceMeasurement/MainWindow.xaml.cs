@@ -208,6 +208,7 @@ namespace CuttingForceMeasurement
                     return;
                 }
             }
+            isSaved = false;
             if (CurrentSensorsData != null)
             {
                 if (CurrentSensorsData.IsReading)
@@ -219,7 +220,6 @@ namespace CuttingForceMeasurement
             }
             else
             {
-                isSaved = false;
                 this.ResetAll();
                 this.Record.Content = "Остановить";
                 if (isDemoMode)
