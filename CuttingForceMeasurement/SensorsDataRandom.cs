@@ -24,7 +24,7 @@ namespace CuttingForceMeasurement
             SensorDataItem se = new SensorDataItem
             {
                 Time = count,
-                Acceleration = (Rand.Next(0, 100)/100) * Main.settings.AccelerationCoef,
+                Acceleration = (Rand.Next(0, 100)/100.0) * Main.settings.AccelerationCoef,
                 Force = Rand.Next(0, 5) * Main.settings.ForceCoef,
                 Voltage = 220 * Main.settings.VoltageCoef,
                 Amperage = (3.5 + Math.Round(Rand.NextDouble(), 2) * 2.5) * Main.settings.AmperageCoef,
