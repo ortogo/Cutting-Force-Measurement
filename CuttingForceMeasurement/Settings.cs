@@ -42,6 +42,10 @@ namespace CuttingForceMeasurement
         /// Демо режим
         /// </summary>
         public bool DemoMode { get; set; }
+        /// <summary>
+        /// Тестовый режим
+        /// </summary>
+        public bool TestMode { get; set; }
 
         /// <summary>
         /// Копирование объекта настроек
@@ -59,6 +63,7 @@ namespace CuttingForceMeasurement
                 AmperageCoef = this.AmperageCoef,
                 RpmCoef = this.RpmCoef,
                 DemoMode = this.DemoMode,
+                TestMode = this.TestMode,
             };
         }
     }

@@ -84,7 +84,17 @@
                                     Checked="DemoMode_Checked"
                                     Unchecked="DemoMode_Unchecked"/>
                             </StackPanel>
+                        <StackPanel Orientation="Horizontal" Height="48">
+                            <TextBlock VerticalAlignment="Center" Width="200" Text="Тестовый режим"/>
+                            <ToggleButton
+                                    x:Name="TestMode"
+                                    VerticalAlignment="Center"
+                                    Style="{StaticResource MaterialDesignSwitchDarkToggleButton}"
+                                    IsChecked="{Binding TestMode}"
+                                    Checked="TestMode_Checked"
+                                    Unchecked="TestMode_Unchecked"/>
                         </StackPanel>
+                    </StackPanel>
                     </StackPanel>
                 </ScrollViewer>
                 <StackPanel Height="48" Orientation="Horizontal" HorizontalAlignment="Right">

@@ -72,7 +72,7 @@ namespace CuttingForceMeasurement
                     sdiParams[i] = Double.Parse(sdiParamsString[i]);
                     
                 }
-                if (sdiParams[AMPERAGE_INDEX] != 0)
+                if ((sdiParams[AMPERAGE_INDEX] != 0) || Main.settings.TestMode)
                 {
                     machineStoped = false;
                 }

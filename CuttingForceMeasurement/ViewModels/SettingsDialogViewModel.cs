@@ -112,6 +112,19 @@ namespace CuttingForceMeasurement.ViewModels
         }
 
         /// <summary>
+        /// Тестовый режим
+        /// </summary>
+        public bool TestMode
+        {
+            get => CurrentSettings.TestMode;
+            set
+            {
+                CurrentSettings.TestMode = value;
+                OnPropertyChanged(nameof(TestMode));
+            }
+        }
+
+        /// <summary>
         /// Сохраняет настройки
         /// </summary>
         public void Save()
@@ -177,6 +190,7 @@ namespace CuttingForceMeasurement.ViewModels
             AmperageCoef = s.AmperageCoef;
             RpmCoef = s.RpmCoef;
             DemoMode = s.DemoMode;
+            TestMode = s.TestMode;
         }
 
         /// <summary>
@@ -208,6 +222,7 @@ namespace CuttingForceMeasurement.ViewModels
             AmperageCoef = 1;
             RpmCoef = 1;
             DemoMode = false;
+            TestMode = false;
         }
     }
 }

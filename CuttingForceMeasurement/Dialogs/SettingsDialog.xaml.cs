@@ -104,5 +104,15 @@ namespace CuttingForceMeasurement.Dialogs
         {
             OffDemoMode?.Invoke(sender, e);
         }
+
+        private void TestMode_Checked(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void TestMode_Unchecked(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
