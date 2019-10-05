@@ -3,7 +3,7 @@
 Приложение позволит Вам записать в реальном времени показания датчиков.
 Графический интерфейс создан на основе современной дизайнерской технологии MaterialDesign и системе построения пользовательских приложений WPF
 
-![Главное окно](https://github.com/ortogo/CuttingForceMeasurement/raw/master/screenshots/MainWindow.webp)
+![Главное окно](https://raw.githubusercontent.com/ortogo/Cutting-Force-Measurement/master/screenshots/MainWindow.webp)
 
 # Используемые библиотеки
 
